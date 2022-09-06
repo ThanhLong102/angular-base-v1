@@ -31,8 +31,8 @@ export const routes: Routes = [
     path: 'changePassword/finish',
     component: ChangePasswordFinishComponent,
   },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '**', redirectTo: 'home' },
+  { path: '', redirectTo: 'home-public', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home-public' },
 ];
 
 const config: ExtraOptions = {

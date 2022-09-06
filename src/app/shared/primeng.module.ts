@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -17,15 +17,15 @@ import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ListboxModule } from 'primeng/listbox';
 import { BadgeModule } from 'primeng/badge';
-import { ConfirmationService, MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from 'primeng/api';
 import {PanelModule} from 'primeng/panel';
 import {ToastModule} from 'primeng/toast';
 import {InputTextModule} from 'primeng/inputtext';
 import {RippleModule} from 'primeng/ripple';
 import {ToolbarModule} from 'primeng/toolbar';
 import {FileUploadModule} from 'primeng/fileupload';
-import { AvatarModule } from "primeng/avatar";
-import { AvatarGroupModule } from "primeng/avatargroup";
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import {CardModule} from 'primeng/card';
 
 
@@ -55,12 +55,12 @@ const modules = [
     FileUploadModule,
     AvatarModule,
     AvatarGroupModule,
-    CardModule
-]
+    CardModule,
+];
 
 @NgModule({
     imports: [...modules],
     exports: [...modules],
-    providers: [MessageService, ConfirmationService]
+    providers: [MessageService, ConfirmationService],
 })
 export class PrimengModule { }

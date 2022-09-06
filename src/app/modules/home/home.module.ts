@@ -119,6 +119,7 @@ const routes: Routes = [{
     PaginatorModule,
     DialogModule,
     InputTextareaModule,
+    PrimengModule,
   ],
   exports: [],
 })
