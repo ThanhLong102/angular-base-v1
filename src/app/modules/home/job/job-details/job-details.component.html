@@ -1,48 +1,59 @@
 <ng-template [ngIf]="job">
   <div class="container">
     <div class="mb-5">
+
       <ng-template [ngIf]="user.roles[0].id === 1 || user.roles[0].id === 2">
         <p-button (onClick)="onUpdate()" label="Cập nhật" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="user.roles[0].id === 1 || user.roles[0].id === 2">
         <p-button label="Xem trước" (click)="onPreview(job.id)" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 1">
         <p-button label="xét duyệt" (click)="onBrowse()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 1">
         <p-button (click)="showPositionDialog('top')" label="từ chối duyệt" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="job.statusJob.id === 3">
         <p-button label="Đăng tuyển" (click)="onUp()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="job.statusJob.id === 5">
         <p-button (click)="displayPositionReason = true" label="Xem lý do" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="job.statusJob.id === 2">
         <p-button label="dừng tuyển" (click)="onStop()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="job.statusJob.id === 2 || job.statusJob.id === 3">
         <p-button label="Đóng" (click)="onClose()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 5 ||job.statusJob.id === 4 ">
         <p-button label="Xóa" (click)="onDelete()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
     </div>
+
     <div class="d-flex">
       <div class="mb-4">
         <h2 href="#" class="display-5 font-weight-bold">{{job.name}}</h2>
         <p class="mt-3">Hạn nộp hồ sơ: {{this.job.dueDate | date}}</p>
       </div>
     </div>
+
     <h2>Thông tin chung</h2>
     <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
       <div>
         <div>
           <h2>Mức lương</h2>
-          <p>{{job.salaryMin}}-{{job.salaryMax}} triệu</p>
+          <p>{{job.salaryMin}}-{{job.salaryMax}} Triệu đồng</p>
         </div>
         <div>
           <h2>Hình thức làm việc</h2>
@@ -63,7 +74,7 @@
           <p>{{job.jobPosition.code}}</p>
         </div>
         <div>
-          <h2>Kinh nghiệm </h2>
+          <h2>Kinh nghiệm</h2>
           <p>{{job.numberExperience}}</p>
         </div>
       </div>
@@ -90,11 +101,12 @@
 </ng-template>
 
 <p-dialog header="Nhập lý do" [(visible)]="displayPosition" [position]="position" [modal]="true"
-          [style]="{width: '50vw'}" [baseZIndex]="10000"
-          [draggable]="false" [resizable]="false">
+          [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
   <div class="container text-center">
-    <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="reasonDto.reason"></textarea>
+    <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize"
+              [(ngModel)]="reasonDto.reason"></textarea>
   </div>
+
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" type="submit" (click)="onRefuse()" label="Yes" class="p-button-text"></p-button>
     <p-button icon="pi pi-times" (click)="displayPosition=false" label="No" class="ml-2"></p-button>

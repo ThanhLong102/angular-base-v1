@@ -14,21 +14,13 @@ import {StatusJob} from '../../../../models/model/StatusJob';
 export class JobRegisterListComponent implements OnInit {
 
   public jobRegisters: JobRegister[];
-
   statusJobs: StatusJob[];
-
   searchJobRegister: SearchJobRegister;
-
   selectedStatusJobAdvanced: any;
-
   filteredStatusJobs: any[];
-
   selectedName: any;
-
   sortOptions: SelectItem[];
-
   sortOrder: number;
-
   sortField: string;
   sortKey: any;
   page: number;
@@ -42,8 +34,8 @@ export class JobRegisterListComponent implements OnInit {
   ngOnInit(): void {
     this.getStatusRegisterJob();
     this.sortOptions = [
-      {label: 'Tên ứng viên', value: 'name'},
-      {label: 'Thời gian nộp hồ sơ', value: 'dueDate'},
+      {label: 'Tên ứng viên ', value: 'name'},
+      {label: 'Thời gian nộp hồ sơ ', value: 'dueDate'},
     ];
     this.getInnitData();
     this.onSearch();
@@ -86,7 +78,6 @@ export class JobRegisterListComponent implements OnInit {
 
   filterStatusJob(event) {
     // eslint-disable-next-line max-len
-    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
     const filtered: any[] = [];
     const query = event.query;
 

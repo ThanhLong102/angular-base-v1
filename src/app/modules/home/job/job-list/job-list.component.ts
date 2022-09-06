@@ -20,15 +20,10 @@ export class JobListComponent implements OnInit {
   user: User;
   searchJob: SearchJob;
   statusJobs: any[];
-
   selectedStatusJobAdvanced: any;
-
   filteredStatusJobs: any[];
-
   sortOptions: SelectItem[];
-
   sortOrder: number;
-
   sortField: string;
   sortKey: any;
   page: number;
@@ -52,7 +47,7 @@ export class JobListComponent implements OnInit {
   }
 
   getInnitData() {
-    this.selectedStatusJobAdvanced = {id: 1, code:'chờ xét duyệt'};
+    this.selectedStatusJobAdvanced = {id: 1, code:'Chờ xét duyệt'};
     this.searchJob = {name:'',statusId:1,salaryMin:0,salaryMax:200,addressWork:'',skills:''};
     this.page = 0;
     this.size = 2;

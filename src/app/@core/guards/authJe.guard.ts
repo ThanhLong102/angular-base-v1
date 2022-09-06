@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import {UserService} from '../../service/user.service';
-import {User} from '../../models/model/User';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +11,9 @@ export class AuthJeGuard implements CanActivate {
   role: string;
 
   constructor(private router: Router,private userService: UserService) {
-    this.getUser();
+    if(this.userService.getDecodedAccessToken() != null){
+      this.getUser();
+    }
   }
 
   public getUser(): void {

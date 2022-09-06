@@ -41,10 +41,7 @@ export class UserAddComponent implements OnInit {
       },
     );
   }
-
-
   onSubmit() {
     this.addUser();
   }
-
 }

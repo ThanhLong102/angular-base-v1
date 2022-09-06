@@ -7,7 +7,6 @@ import {User} from '../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AuthService} from '../../../service/auth.service';
 
-
 @Component({
   selector: 'ngx-login',
   templateUrl: './login.component.html',
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
     if(this.user.firstTimeLogin){
       window.sessionStorage.removeItem('email');
       window.sessionStorage.setItem('email',this.user.email);
-      alert('Đây là lần đầu bạn đăng nhập tài khoản này hãy đổi mật khẩu mới và đăng nhập lại');
+      alert('Đây là lần đầu bạn đăng nhập tài khoản này hãy đổi mật khẩu mới và đăng nhập lại !');
       this.sendOtp();
       this.tokenService.removeToken();
     }else {
@@ -64,10 +63,13 @@ export class LoginComponent implements OnInit {
           // eslint-disable-next-line max-len
           if (this.userService.getDecodedAccessToken().auth === 'ROLE_ADMIN' || this.userService.getDecodedAccessToken().auth === 'ROLE_JE') {
             this.getUserByUserName();
-          }else if (this.userService.getDecodedAccessToken().auth==='ROLE_USER'){
-            this.router.navigate(['/home-public']).then(r => console.log(r));
+          // }else if (this.userService.getDecodedAccessToken().auth==='ROLE_USER' ||
+          //   this.userService.getDecodedAccessToken().auth === 'ROLE_ADMIN' ||
+          //   this.userService.getDecodedAccessToken().auth === 'ROLE_JE'){
+          //   this.router.navigate(['/home-public']).then(r => console.log(r));
           }else {
             this.router.navigate(['/auth/login']).then(r => console.log(r));
+            this.router.navigate(['/home-public']).then(r => console.log(r));
           }
           /*       this.tokenService.saveUser(data.userName);
                  this.roles = this.tokenService.getUser().roles;*/
@@ -99,7 +101,6 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/auth/signup']).then(r => console.log(r));
   }
   resetPassword() {}
-
 
   public getUserByUserName(): void {
     this.userService.getUserByUserName(  this.userService.getDecodedAccessToken().sub).subscribe(

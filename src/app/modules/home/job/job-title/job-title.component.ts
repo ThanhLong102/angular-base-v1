@@ -26,7 +26,6 @@ export class JobTitleComponent implements OnInit {
   constructor(private readonly router: Router, private jobService: JobService) {
   }
 
-
   ngOnInit(): void {
   }
 
@@ -86,7 +85,6 @@ export class JobTitleComponent implements OnInit {
     // this.addFont();
     // doc.addFont('Roboto-regular-normal.ttf', 'Roboto-regular', 'normal');
     doc.setFont('Roboto-regular', 'normal');
-
 
     console.log('font', doc.getFontList());
 

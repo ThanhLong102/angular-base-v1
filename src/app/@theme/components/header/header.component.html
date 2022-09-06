@@ -3,8 +3,10 @@
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
-    <a class="logo" href="#" (click)="navigateHome()">Recruitment</a>
+
+    <a class="logo" href="#" (click)="navigateHome()">ITSOL</a>
   </div>
+
   <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
@@ -12,24 +14,18 @@
 
 <div class="header-container">
   <nb-actions size="small">
-
     <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
+
     <nb-action class="control-item" icon="email-outline"></nb-action>
-    <nb-action class="control-item" icon="bell-outline" [nbContextMenu]="notifyMenu" [badgeDot]="badgeDot"
-               [nbContextMenuAdjustment]="adjustment"
-               (click)="badgeDot = false"
-               badgePosition="top right"
-               badgeStatus="danger"
-    >
+    <nb-action class="control-item" icon="bell-outline" [nbContextMenu]="notifyMenu" [badgeDot]="badgeDot" [nbContextMenuAdjustment]="adjustment"
+               (click)="badgeDot = false" badgePosition="top right" badgeStatus="danger">
     </nb-action>
+
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <ng-template [ngIf]="user">
-        <nb-user [nbContextMenu]="userMenu"
-                 [onlyPicture]="userPictureOnly"
-                 [name]="'Xin chào' + ' ' +name"
-                 [picture]="picture">
+        <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="'Xin chào' + ' ' +name" [picture]="picture">
         </nb-user>
       </ng-template>
     </nb-action>

@@ -15,19 +15,15 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class JobRegisterTitleComponent implements OnInit {
 
   @Input() jobRegister: JobRegister;
-
   cvFileName: string;
-
   displayPositionReason: boolean;
   scheduleDto: ScheduleDto;
-
   displayPosition: boolean;
   position: string;
   appointment: FormGroup;
   currentDate = new Date();
   methods: any[];
   addressInterviews: any[];
-
   // eslint-disable-next-line max-len
   avatar: string;
   // eslint-disable-next-line max-len

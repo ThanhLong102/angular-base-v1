@@ -119,4 +119,22 @@ export class JobService {
     );
   }
 
+  public getTotalJob(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'jobs/find-total-job',dashboardVM).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getTotalJobDueDate(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'jobs/find-total-dueDate',dashboardVM).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getTotalViews(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'jobs/find-total-views',dashboardVM).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
 }

@@ -47,6 +47,7 @@ export class JobRegisterService {
     );
   }
 
+
   public getJobRegisterById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/id='+id).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
@@ -55,6 +56,24 @@ export class JobRegisterService {
 
   public getByJobId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/jobId='+id).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getByDateAndStatus(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'job-registers/find-by-date-and-status',dashboardVM).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getTotalRegister(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'job-registers/find-total-register',dashboardVM).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getTotalByMonth(dashboardVM: any): Observable<any> {
+    return this.http.post<any>(`${this.apiPublicUrl}`+'job-registers/find-total-by-month',dashboardVM).pipe(
       tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
     );
   }

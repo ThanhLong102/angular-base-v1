@@ -1,6 +1,5 @@
 <p-dialog header="Xem lý do" [(visible)]="displayPosition" [position]="'top'" [modal]="true" [closable]="false"
-          [style]="{width: '50vw'}" [baseZIndex]="10000"
-          [draggable]="false" [resizable]="false" >
+          [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false" >
   <p>{{content}}</p>
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-times" (click)="toggle()" label="No" class="ml-2"></p-button>

@@ -1,0 +1,88 @@
+<div class="bg-light p-4">
+  <div class="d-flex justify-content-around mb-4">
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label fw-bolder">Từ ngày :</label>
+
+      <div class="col-md-8">
+        <p-calendar [(ngModel)]="sDate"
+                    [showIcon]="true"
+                    inputId="time"
+                    (ngModelChange)="changeData()">
+
+        </p-calendar>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label fw-bolder">
+        Đến ngày :
+      </label>
+
+      <div class="col-md-8">
+        <p-calendar [(ngModel)]="eDate"
+                    [showIcon]="true"
+                    inputId="time"
+                    (ngModelChange)="changeData()">
+
+        </p-calendar>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap justify-content-around">
+    <ngx-tag-info class="col-md-3 h-100" [title]="'Tổng số việc đã đăng:'"
+                  [data]="totalJob">
+    </ngx-tag-info>
+
+    <ngx-tag-info class="col-md-3 h-100" [title]="'Tổng số hồ sơ chờ phỏng vấn:'"
+                  [data]="registerWaitPv">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số hồ sơ đang phỏng vấn:'"
+                  [data]="registerPv">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số việc gần hết hạn:'"
+                  [data]="totalJobDueDate">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số lượt xem:'"
+                  [data]="totalViews">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số ứng viên ứng tuyển:'"
+                  [data]="totalRegister">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số ứng viên thành công:'"
+                  [data]="registerSuccess">
+    </ngx-tag-info>
+
+    <ngx-tag-info  class="col-md-3 h-100" [title]="'Tổng số ứng viên đã bị từ chối:'"
+                  [data]="registerFall">
+    </ngx-tag-info>
+  </div>
+
+  <div class="d-flex justify-content-around mt-5">
+    <div class="card container p-3 mr-2">
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label">Khoảng thời gian :</label>
+
+        <div class="col-md-4">
+          <select class="form-control border border-danger" style="height: 35px;line-height: 30px;font-size: 12px">
+            <option [value]="'tháng'">Theo tháng</option>
+            <option [value]="'năm'">Theo năm</option>
+          </select>
+        </div>
+      </div>
+
+      <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+    </div>
+
+    <div class="card container p-2">
+      <p-chart type="pie" [data]="data" [options]="chartOptions"
+               [style]="{'width': '60%','margin-left':'auto','margin-right':'auto'}">
+      </p-chart>
+    </div>
+  </div>
+</div>

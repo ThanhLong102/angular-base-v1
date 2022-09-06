@@ -19,7 +19,11 @@ export class UserTitleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.avatar = 'http://localhost:9090/api/public/files/' + this.user.avatarName;
+    if(this.user.avatarName){
+      this.avatar = 'http://localhost:9090/api/public/files/' + this.user.avatarName;
+    } else {
+      this.avatar='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpBBnQa6qFgqUBWwrpZhSOOIWzyHoQyHbFaA&usqp=CAU';
+    }
   }
 
   onReadUserDetail(id: number) {

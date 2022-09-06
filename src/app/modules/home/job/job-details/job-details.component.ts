@@ -34,7 +34,6 @@ export class JobDetailsComponent implements OnInit{
     this.reasonDto = {jobId: 1, reason: '', statusId: 1};
   }
 
-
   public getJobById(): void {
     this.jobService.getJobById(this.route.snapshot.params.id).subscribe(
       (data: Job) => {
@@ -151,5 +150,4 @@ export class JobDetailsComponent implements OnInit{
     this.position = position;
     this.displayPosition = true;
   }
-
 }

@@ -2,24 +2,21 @@
   <form novalidate (ngSubmit)="onSubmit()" [formGroup]="rfContact" class="row justify-content-md-center container">
     <div class="col-md-8">
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Tên công việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Tên công việc :</label>
         <div class="col-md-8">
           <input [(ngModel)]="name" class="form-control" type="text" formControlName="name">
         </div>
       </div>
+
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('name')?.errors?.required && rfContact.get('name')?.touched">
-        Name is required!
+        Nhập tên công việc là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Ví trí công việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Ví trí công việc :</label>
         <div class="col-md-8">
-          <select
-            class="custom-select mb-3"
-            formControlName="jobPositionId"
-            [(ngModel)]="jobPosition.id"
-          >
+          <select class="custom-select mb-3" formControlName="jobPositionId" [(ngModel)]="jobPosition.id">
             <option value="jobPosition.id">{{jobPosition.code}}</option>
             <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition.id">
               {{ jobPosition.code }}
@@ -29,11 +26,11 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('jobPositionId')?.errors?.required && rfContact.get('jobPositionId')?.touched">
-        JobPosition is required!
+        Chọn vị trí công việc là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Kinh nghiệm:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Kinh nghiệm :</label>
         <div class="col-md-8">
           <input [(ngModel)]="numberExperience" class="form-control" type="number" min="0" id="example-text-input"
                  formControlName="numberExperience">
@@ -41,16 +38,13 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('numberExperience')?.errors?.required && rfContact.get('numberExperience')?.touched">
-        NumberExperience is required!
+        Nhập kinh nghiệm là bắt buộc !
       </div>
+
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Hình thức làm việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Hình thức làm việc :</label>
         <div class="col-md-8">
-          <select
-            class="custom-select mb-3"
-            formControlName="workingFormId"
-            [(ngModel)]="workingForm.id"
-          >
+          <select class="custom-select mb-3" formControlName="workingFormId" [(ngModel)]="workingForm.id">
             <option value="workingForm.id">{{workingForm.code}}</option>
             <option *ngFor="let workingForm of workingForms" [ngValue]="workingForm.id">
               {{ workingForm.code }}
@@ -60,27 +54,24 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('workingFormId')?.errors?.required && rfContact.get('workingFormId')?.touched">
-        workingFormId is required!
+        Chọn hình thức công việc là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Địa chỉ công việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Địa chỉ công việc :</label>
         <div class="col-md-8">
           <input [(ngModel)]="addressWork" class="form-control" type="text" formControlName="addressWork">
         </div>
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('addressWork')?.errors?.required && rfContact.get('addressWork')?.touched">
-        AddressWork is required!
+        Nhập địa chỉ công việc là bắt buộc !
       </div>
+
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Trình độ học vấn:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Trình độ học vấn :</label>
         <div class="col-md-8">
-          <select
-            class="custom-select mb-3"
-            formControlName="academicLevelId"
-            [(ngModel)]="academicLevel.id"
-          >
+          <select class="custom-select mb-3" formControlName="academicLevelId" [(ngModel)]="academicLevel.id">
             <option value="academicLevel.id">{{academicLevel.code}}</option>
             <option *ngFor="let academicLevel of academicLevels" [ngValue]="academicLevel.id">
               {{ academicLevel.code }}
@@ -90,17 +81,13 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('academicLevelId')?.errors?.required && rfContact.get('academicLevelId')?.touched">
-        AcademicLevelId is required!
+        Chọn trình độ học vấn là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Level:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Level :</label>
         <div class="col-md-8">
-          <select
-            class="custom-select mb-3"
-            formControlName="rankId"
-            [(ngModel)]="rank.id"
-          >
+          <select class="custom-select mb-3" formControlName="rankId" [(ngModel)]="rank.id">
             <option value="rank.id">{{rank.code}}</option>
             <option *ngFor="let rank of ranks" [ngValue]="rank.id">
               {{ rank.code }}
@@ -110,36 +97,35 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('rankId')?.errors?.required && rfContact.get('rankId')?.touched">
-        RankId is required!
+        Trình độ học vấn là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Số lượng cần tuyển:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Số lượng cần tuyển :</label>
         <div class="col-md-8">
           <input [(ngModel)]="qtyPerson" class="form-control" type="number" min="0" formControlName="qtyPerson">
         </div>
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('qtyPerson')?.errors?.required && rfContact.get('qtyPerson')?.touched">
-        QtyPerson is required!
+        Nhập số lượng cần tuyển là bắt buộc !
       </div>
+
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Ngày bắt đâu tuyển:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Ngày bắt đâu tuyển :</label>
         <div class="col-md-8">
           <p-calendar [(ngModel)]="startRequirement"  [showIcon]="true" [minDate]="minDate" [showTime]="true"
-                       inputId="time"
-                       formControlName="startRecruitmentDate" [placeholder]="placeholderS">
-
+                       inputId="time" formControlName="startRecruitmentDate" [placeholder]="placeholderS">
           </p-calendar>
         </div>
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('startRecruitmentDate')?.errors?.required && rfContact.get('startRecruitmentDate')?.touched">
-        StartRecruitmentDate is required!
+        Chọn ngày bắt đâu tuyển dụng là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Hạn nộp hồ sơ:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Hạn nộp hồ sơ :</label>
         <div class="col-md-8">
           <p-calendar [(ngModel)]="dueDate" [showTime]="true" [showIcon]="true" inputId="time" [minDate]="minDate"
                       formControlName="dueDate"  [placeholder]="placeholderD"></p-calendar>
@@ -147,11 +133,11 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('dueDate')?.errors?.required && rfContact.get('dueDate')?.touched">
-        DueDate is required!
+        Chọn hạn nộp hồ sơ là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Mô tả công việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Mô tả công việc :</label>
         <div class="col-md-8">
         <textarea [(ngModel)]="description" pInputTextarea formControlName="description" [rows]="3" [cols]="80"
                   autoResize="autoResize" [maxLength]="50"></textarea>
@@ -159,11 +145,11 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('description')?.errors?.required && rfContact.get('description')?.touched">
-        Description is required!
+        Nhập mô tả công việc là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Quyền lợi được hưởng:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Quyền lợi được hưởng :</label>
         <div class="col-md-8">
         <textarea [(ngModel)]="benefits" pInputTextarea formControlName="benefits" [rows]="3" [cols]="80"
                   autoResize="autoResize" [maxLength]="50"></textarea>
@@ -171,11 +157,11 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('benefits')?.errors?.required && rfContact.get('benefits')?.touched">
-        Benefits is required!
+        Nhập quyền lợi được hưởng là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Yêu cầu công việc:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Yêu cầu công việc :</label>
         <div class="col-md-8">
         <textarea [(ngModel)]="jobRequirement" pInputTextarea formControlName="jobRequirement" [rows]="3" [cols]="80"
                   autoResize="autoResize" [maxLength]="50"></textarea>
@@ -183,23 +169,23 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('jobRequirement')?.errors?.required && rfContact.get('jobRequirement')?.touched">
-        JobRequirement is required!
+        Nhập yêu cầu công việc là bắt buộc !
       </div>
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Lương tối thiểu:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Lương tối thiểu :</label>
         <div class="col-md-8">
           <input [(ngModel)]="salaryMin" class="form-control" type="number" [min]="0" formControlName="salaryMin">
         </div>
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('salaryMin')?.errors?.required && rfContact.get('salaryMin')?.touched">
-        salaryMin is required!
+        Nhập lương tối thiểu là bắt buộc !
       </div>
 
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Lương tối đa:</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Lương tối đa :</label>
         <div class="col-md-8">
           <input [(ngModel)]="salaryMax" class="form-control" type="number" [min]="this.rfContact.value.salaryMin"
                  formControlName="salaryMax">
@@ -207,18 +193,14 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('salaryMax')?.errors?.required && rfContact.get('salaryMax')?.touched">
-        salaryMax is required!
+        Nhập lương tối đa là bắt buộc !
       </div>
 
 
       <div class="form-group row">
-        <label for="example-text-input" class="col-md-4 col-form-label">Người liên hệ</label>
+        <label for="example-text-input" class="col-md-4 col-form-label">Người liên hệ :</label>
         <div class="col-md-8">
-          <select
-            class="custom-select mb-3"
-            formControlName="contactId"
-            [(ngModel)]="contact.id"
-          >
+          <select class="custom-select mb-3" formControlName="contactId" [(ngModel)]="contact.id">
             <option value="contact.id">{{contact.name}}</option>
             <option *ngFor="let contact of contacts" [ngValue]="contact.id">
               {{ contact.name }}
@@ -228,7 +210,7 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="rfContact.get('contactId')?.errors?.required && rfContact.get('contactId')?.touched">
-        contactId is required!
+        Chọn người liên hệ là bắt buộc !
       </div>
 
       <div formArrayName="skills" *ngIf="skills.controls.length">
@@ -246,7 +228,7 @@
       </div>
       <div class="form-group row">
         <div class="col-md-10 offset-md-2">
-          <button class="btn btn-primary" type="submit" [disabled]=!this.rfContact.valid>Submit</button>
+          <button class="btn btn-primary" type="submit" [disabled]=!this.rfContact.valid>Cập nhật</button>
         </div>
       </div>
     </div>

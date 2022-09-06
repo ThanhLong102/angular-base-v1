@@ -16,17 +16,17 @@ import {
 
 const socialLinks = [
   {
-    url: 'https://github.com/akveo/nebular',
+    url: 'https://github.com/kieumanhquan',
     target: '_blank',
     icon: 'github',
   },
   {
-    url: 'https://www.facebook.com/akveo/',
+    url: 'https://www.facebook.com/quan.kieu.5817/',
     target: '_blank',
     icon: 'facebook',
   },
   {
-    url: 'https://twitter.com/akveo_inc',
+    url: 'https://twitter.com',
     target: '_blank',
     icon: 'twitter',
   },
@@ -36,7 +36,6 @@ const socialLinks = [
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
-    // here you could provide any role based on any auth flow
     return observableOf('guest');
   }
 }

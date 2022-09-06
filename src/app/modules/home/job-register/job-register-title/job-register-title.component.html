@@ -1,60 +1,67 @@
 <div class="d-flex justify-content-lg-start container bg-info p-3 rounded mb-4">
-  <p-avatar class="ml-2"
-    [image]="this.avatar"
-    size="xlarge">
-  </p-avatar>
+  <p-avatar class="ml-2" [image]="this.avatar" size="xlarge"></p-avatar>
+
   <div class="ml-4">
     <div class="d-flex justify-content-lg-between">
-      <a (click)="onReadDetail(jobRegister.id)" style="cursor: pointer;" class="display-5 font-weight-bold mr-5">{{jobRegister.user.name}}</a>
-      <p class="badge badge-secondary mr-2">{{this.jobRegister.dateRegister| date}}</p>
+      <a (click)="onReadDetail(jobRegister.id)" style="cursor: pointer;" class="display-5 font-weight-bold mr-5">
+        {{jobRegister.user.name}}
+      </a>
+
+      <p class="badge badge-secondary mr-2">
+        {{this.jobRegister.dateRegister| date}}
+      </p>
     </div>
+
     <div class="d-flex mt-2 justify-content-between">
-      <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">{{jobRegister.job.name}}</p>
-      <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">{{jobRegister.job.jobPosition.code}}</p>
-      <p class="badge badge-secondary mr-2">{{this.jobRegister.statusJobRegister.code}}</p>
+      <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">
+        {{jobRegister.job.name}}
+      </p>
+
+      <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">
+        {{jobRegister.job.jobPosition.code}}
+      </p>
+
+      <p class="badge badge-secondary mr-2">
+        {{this.jobRegister.statusJobRegister.code}}
+      </p>
     </div>
+
     <div>
       <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm" class="mr-2"></p-button>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
         <p-button (click)="showPositionDialogReason()" label="Xem lý do" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
+
       <ng-template [ngIf]="jobRegister.statusJobRegister.id === 2">
         <p-button label="Đặt lịch phỏng vấn" (click)="showPositionDialog('top')" styleClass="p-button-sm"></p-button>
       </ng-template>
-
     </div>
   </div>
 </div>
 
 <ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="close($event)" [content]="this.jobRegister.reason"></ngx-popup-reason>
 
-
 <p-dialog header="Đặt lịch phỏng vấn" [(visible)]="displayPosition" [position]="position" [modal]="true"
-          [style]="{width: '50vw'}" [baseZIndex]="10000"
-          [draggable]="false" [resizable]="false">
-  <form novalidate (ngSubmit)="onBook()" [formGroup]="appointment"
-        class="row justify-content-md-center container popup">
+          [style]="{width: '50vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form novalidate (ngSubmit)="onBook()" [formGroup]="appointment" class="row justify-content-md-center container popup">
     <div class="col-md-8">
       <div class="form-group row">
-        <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn:</label>
+        <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn :</label>
         <div class="col-md-10">
-          <p-calendar  [showTime]="true" [showIcon]="true" [minDate]="currentDate" inputId="time"
-                      formControlName="dateBook"></p-calendar>
+          <p-calendar  [showTime]="true" [showIcon]="true" [minDate]="currentDate" inputId="time" formControlName="dateBook"></p-calendar>
         </div>
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="appointment.get('dateBook')?.errors?.required && appointment.get('dateBook')?.touched">
-        DateBook is required!
+        Ngày hẹn phỏng vấn không được để trống !
       </div>
+
       <div class="form-group row">
-        <label class="col-md-4 col-form-label">Hình thức phỏng vấn:</label>
+        <label class="col-md-4 col-form-label">Hình thức phỏng vấn :</label>
         <div class="col-md-10">
-          <select
-            class="custom-select mb-3"
-            formControlName="method"
-          >
+          <select class="custom-select mb-3" formControlName="method">
             <option *ngFor="let method of methods" [ngValue]="method">
               {{ method }}
             </option>
@@ -63,16 +70,14 @@
       </div>
       <div class="col alert alert-danger" role="alert"
            *ngIf="appointment.get('method')?.errors?.required && appointment.get('method')?.touched">
-        Method is required!
+        Hình thức phỏng vấn không được để trống !
       </div>
+
       <ng-template [ngIf]="this.appointment.value.method === 'online'">
         <div class="form-group row">
-          <label class="col-md-4 col-form-label">Công cụ phỏng vấn:</label>
+          <label class="col-md-4 col-form-label">Công cụ phỏng vấn :</label>
           <div class="col-md-10">
-            <select
-              class="custom-select mb-3"
-              formControlName="addressInterview"
-            >
+            <select class="custom-select mb-3" formControlName="addressInterview">
               <option *ngFor="let addressInterview of addressInterviews" [ngValue]="addressInterview">
                 {{ addressInterview }}
               </option>
@@ -81,7 +86,7 @@
         </div>
         <div class="col alert alert-danger" role="alert"
              *ngIf="appointment.get('addressInterview')?.errors?.required && appointment.get('addressInterview')?.touched">
-          AddressInterview is required!
+          Công cụ phỏng vấn không được để trống !
         </div>
       </ng-template>
 
@@ -92,8 +97,8 @@
       </div>
     </div>
   </form>
-  <ng-template pTemplate="footer">
 
-  </ng-template>
+<!--  <ng-template pTemplate="footer">-->
+<!--  </ng-template>-->
 </p-dialog>
 

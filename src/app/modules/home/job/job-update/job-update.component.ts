@@ -25,7 +25,6 @@ export class JobUpdateComponent implements OnInit {
   contacts: User[];
   job: Job;
   jobDto: JobDto;
-
   name: any;
   jobPosition: any;
   numberExperience: any;
@@ -45,7 +44,6 @@ export class JobUpdateComponent implements OnInit {
   minDate = new Date();
   placeholderS: string;
   placeholderD: string;
-
   rfContact: FormGroup;
   user: User;
 
@@ -249,5 +247,4 @@ export class JobUpdateComponent implements OnInit {
     this.updateJob();
     this.router.navigate(['/home/list-job']).then(r => console.log(r));
   }
-
 }

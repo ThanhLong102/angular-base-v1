@@ -42,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error['status'] === 403) {
           this.tokenService.removeToken();
-          this.router.navigate(['/auth/']).then(r => console.log(r));
+          this.router.navigate(['/auth']).then(r => console.log(r));
         }
         return throwError(error);
       }),

@@ -60,7 +60,6 @@ export class JobRegisterDetailComponent implements OnInit {
     this.reasonDto= {jobId: 0, reason: '', statusId: 0};
   }
 
-
   public getJobById(): void {
     this.jobRegisterService.getJobRegisterById(this.route.snapshot.params.id).subscribe(
       (data: JobRegister) => {

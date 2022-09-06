@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ListJobRegisterComponent } from './list-job-register.component';
 
 describe('ListJobRegisterComponent', () => {

@@ -1,106 +1,102 @@
-<h1>Thông tin cá nhân</h1>
 <ng-template [ngIf]="user">
   <p-card>
-    <form [formGroup]="formProfile" (ngSubmit)="onSubmit()" >
+    <h1 class="container-fluid text-center" >Thông Tin Cá Nhân</h1>
+
+    <form [formGroup]="formProfile" (ngSubmit)="onSubmit()">
       <ng-template [ngIf]="user">
-        <div class="row">
-          <img src="{{this.avatarUrl}}" alt="Avatar"
-               style="width:200px; border-radius: 100%;  margin: 0 auto 20px;">
+        <div class="container-fluid text-center">
+          <img [style]="{'width':'200px', 'border-radius': '100%', 'margin': '0 auto 20px'}" src="{{this.avatarUrl}}" alt="Avatar">
         </div>
-        <div class="row mb-5" style="margin-left: 45%;">
-          <p-fileUpload mode="basic" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+
+        <div class=" text-center mb-5">
+          <p-fileUpload mode="basic" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*"
+                        [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
         </div>
       </ng-template>
+
       <div class="form-row">
         <div class="form-group col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label ">Họ và Tên</label>
             <div class="col-9">
-              <input type="text" pInputText class="form-control" formControlName="name" [(ngModel)]="user.name" >
+              <input type="text" pInputText class="form-control" formControlName="name">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formProfile.get('name')?.errors?.required && formProfile.get('name')?.touched">
+                Không được để trống họ và tên !
+              </small>
             </div>
-
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formProfile.get('name')?.errors?.required && formProfile.get('name')?.touched">
-            Bạn phải unzip họ tên!
           </div>
         </div>
+
         <div class="form-group col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label">Email</label>
             <div class="col-9">
-              <input type="text" pInputText class="form-control" formControlName="email" [(ngModel)]="user.email">
+              <input type="text" pInputText class="form-control" formControlName="email">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formProfile.get('email')?.errors?.required && formProfile.get('email')?.touched">
+                Email không được để trống !
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formProfile.get('email')?.errors?.required && formProfile.get('email')?.touched">
-            Bạn phải nhập gmail!
           </div>
         </div>
       </div>
-      <div class="form-row" style="margin-bottom: 20px;">
+
+      <div class="form-row" [style]="{'margin-bottom':'20px'}">
         <div class="col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label">Số điện thoại</label>
             <div class="col-9">
-              <input type="text" pInputText class="form-control" formControlName="phoneNumber" [(ngModel)]="user.phoneNumber">
-            </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formProfile.get('phoneNumber')?.errors?.required && formProfile.get('phoneNumber')?.touched">
-            Bạn phải nhập số điện thoại!
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formProfile.get('phoneNumber')?.errors?.pattern && formProfile.get('phoneNumber')?.touched">
-            Bạn phải nhập đúng định dạng số điện thoại!
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <label class="label col-3 col-form-label">Ngày sinh</label>
-            <div class="col-9">
-              <p-calendar [(ngModel)]="user.birthday" [showTime]="true" inputId="time" formControlName="birthday" [maxDate]="currentDate" [placeholder]="birthday"></p-calendar>
+              <input type="text" pInputText class="form-control" formControlName="phoneNumber">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formProfile.get('phoneNumber')?.errors?.required && formProfile.get('phoneNumber')?.touched">
+                Số điện thoại không được để trống !
+              </small>
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formProfile.get('phoneNumber')?.errors?.pattern && formProfile.get('phoneNumber')?.touched">
+                Định dạng số điện thoại chưa đúng !
+              </small>
             </div>
           </div>
         </div>
 
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Ngày sinh</label>
+            <div class="col-9">
+              <p-calendar  [style]="{'minWidth':'100%'}" formControlName="birthday" [showIcon]="true" inputId="time" [maxDate]="currentDate"
+                          [placeholder]="birthday"></p-calendar>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="form-row">
         <div class="col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label">Quê quán</label>
             <div class="col-9">
-              <input type="text" pInputText class="form-control" formControlName="homeTown" [(ngModel)]="user.homeTown">
+              <input type="text" pInputText class="form-control" formControlName="homeTown">
             </div>
           </div>
-
         </div>
+
         <div class="col-md-6">
           <div class="row">
             <label class="label col-sm-3 col-form-label">Giới tính</label>
-            <div class="col-sm-9">
-              <select
-                class="custom-select mb-3"
-                formControlName="gender"
-                [(ngModel)]="user.gender"
-              >
+            <div class="col-9">
+              <select class="custom-select mb-3" formControlName="gender">
                 <option value="Nam">Nam</option>
                 <option value="Nữ">Nữ</option>
               </select>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <button class="btn btn-primary mt-5" type="submit" >Áp dụng</button>
+
+        <div class="container-fluid text-center">
+          <button class="btn btn-primary mt-5" type="submit">Áp dụng</button>
         </div>
-
-
-
       </div>
-
-
     </form>
-
   </p-card>
-
 </ng-template>

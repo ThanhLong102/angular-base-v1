@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   notifyMenu = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  userMenu = [ { title: 'Profile' }, { title: 'Log out'   }];
+  userMenu = [ { title: 'Trang Cá Nhân' }, { title: 'Đăng Xuất'   }];
 
   private stompClient = null;
 
@@ -96,12 +96,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.connect();
 
     this.menuService.onItemClick().subscribe((event)=>{
-      if(event.item.title==='Log out'){
+      if(event.item.title==='Đăng Xuất'){
         this.sessionService.removeItem('auth-token');
         this.sessionService.removeItem('auth-user');
         this.router.navigate(['/auth/']).then(r => console.log(r));
       }
-      if(event.item.title==='Profile'){
+      if(event.item.title==='Trang Cá Nhân'){
         this.router.navigate(['/home/profile']).then(r => console.log(r));
       }
     });

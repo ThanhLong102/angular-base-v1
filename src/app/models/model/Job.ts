@@ -5,7 +5,6 @@ import {User} from './User';
 import {StatusJob} from './StatusJob';
 import {WorkingForm} from './WorkingForm';
 
-
 export interface Job{
   id: number;
   name: string;

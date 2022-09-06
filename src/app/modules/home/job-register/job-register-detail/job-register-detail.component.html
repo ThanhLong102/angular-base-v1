@@ -3,28 +3,28 @@
     <div class="mb-5">
       <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm"
                 class="mr-2"></p-button>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id === 1 && ( user.roles[0].id === 1 || user.roles[0].id === 2 )">
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 1 && ( user.roles[0].id === 1 || user.roles[0].id === 2 )">
         <p-button (click)="onBrowse()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id !== 5 && jobRegister.statusJobRegister.id !== 6
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id !== 5 && jobRegister.statusJobRegister.id !== 6
         && (user.roles[0].id === 1 || user.roles[0].id === 2)">
         <p-button label="Từ chối ứng viên" (click)="displayPositionInput=true" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
         <p-button label="Xem lý do" (click)="displayPositionReason = true" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id === 2 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 2 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
         <p-button (click)="showPositionDialog('top')" label="Đặt lịch phỏng vấn" styleClass="p-button-sm"
                   class="mr-2"></p-button>
       </ng-template>
-      <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id === 3 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 3 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
         <p-button label="Tuyển thành công" (click)="onConfirm()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
     </div>
@@ -36,24 +36,21 @@
             class="row justify-content-md-center container popup">
         <div class="col-md-8">
           <div class="form-group row">
-            <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn:</label>
+            <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn :</label>
             <div class="col-md-10">
               <p-calendar [(ngModel)]="dateBook" [showTime]="true" [showIcon]="true" [minDate]="currentDate"
-                          inputId="time"
-                          formControlName="dateBook"></p-calendar>
+                          inputId="time" formControlName="dateBook"></p-calendar>
             </div>
           </div>
+
           <div class="col alert alert-danger" role="alert"
                *ngIf="appointment.get('dateBook')?.errors?.required && appointment.get('dateBook')?.touched">
-            DateBook is required!
+            Ngày hẹ phogr vấn không được để trống !
           </div>
           <div class="form-group row">
-            <label class="col-md-4 col-form-label">Hình thức phỏng vấn:</label>
+            <label class="col-md-4 col-form-label">Hình thức phỏng vấn :</label>
             <div class="col-md-10">
-              <select
-                class="custom-select mb-3"
-                formControlName="method"
-              >
+              <select class="custom-select mb-3" formControlName="method">
                 <option *ngFor="let method of methods" [ngValue]="method">
                   {{ method }}
                 </option>
@@ -62,16 +59,13 @@
           </div>
           <div class="col alert alert-danger" role="alert"
                *ngIf="appointment.get('method')?.errors?.required && appointment.get('method')?.touched">
-            Method is required!
+            Hình thức phỏng vấn không được để trống !
           </div>
           <ng-template [ngIf]="this.appointment.value.method === 'online'">
             <div class="form-group row">
-              <label class="col-md-4 col-form-label">Công cụ phỏng vấn:</label>
+              <label class="col-md-4 col-form-label">Công cụ phỏng vấn :</label>
               <div class="col-md-10">
-                <select
-                  class="custom-select mb-3"
-                  formControlName="addressInterview"
-                >
+                <select class="custom-select mb-3" formControlName="addressInterview">
                   <option *ngFor="let addressInterview of addressInterviews" [ngValue]="addressInterview">
                     {{ addressInterview }}
                   </option>
@@ -80,7 +74,7 @@
             </div>
             <div class="col alert alert-danger" role="alert"
                  *ngIf="appointment.get('addressInterview')?.errors?.required && appointment.get('addressInterview')?.touched">
-              AddressInterview is required!
+              Công cụ phỏng vấn không được để trống !
             </div>
           </ng-template>
 
@@ -92,74 +86,83 @@
         </div>
       </form>
     </p-dialog>
+
     <div class="d-flex">
       <div>
-        <p-avatar
-          [image]="this.avatar"
-          size="xlarge">
-        </p-avatar>
+        <p-avatar [image]="this.avatar" size="xlarge"></p-avatar>
       </div>
       <div class="ml-5 mb-5">
         <h2 href="#" class="display-5 font-weight-bold">{{jobRegister.user.name}}</h2>
-        <p class="mt-3">Đăng kí hồ sơ: {{this.jobRegister.dateRegister | date}}</p>
+        <p class="mt-3">Đăng kí hồ sơ : {{this.jobRegister.dateRegister | date}}</p>
       </div>
     </div>
     <h2>Thông tin về công việc</h2>
+
     <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
       <div>
         <div>
           <h2>Mức lương</h2>
-          <p>{{jobRegister.job.salaryMin}}-{{jobRegister.job.salaryMax}} triệu</p>
+          <p>{{jobRegister.job.salaryMin}}-{{jobRegister.job.salaryMax}} Triệu đồng</p>
         </div>
+
         <div>
           <h2>Hình thức làm việc</h2>
           <p>{{jobRegister.job.workingForm.code}}</p>
         </div>
+
         <div>
           <h2>Trình độ học vấn</h2>
           <p>{{jobRegister.job.academicLevel.code}}</p>
         </div>
       </div>
+
       <div class="ml-5">
         <div>
           <h2>Số lượng tuyển</h2>
           <p>{{jobRegister.job.qtyPerson}} người</p>
         </div>
+
         <div>
           <h2>Vị trí ứng tuyển</h2>
           <p>{{jobRegister.job.jobPosition.code}}</p>
         </div>
+
         <div>
           <h2>Kinh nghiệm </h2>
           <p>{{jobRegister.job.numberExperience}} năm</p>
         </div>
       </div>
     </div>
+
     <ng-template [ngIf]="profiles">
       <h2>Thông tin về ứng viên</h2>
+
       <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
         <div>
           <div>
             <h2>Mức lương</h2>
             <p>{{profiles.desiredSalary}} triệu</p>
           </div>
+
           <div>
             <h2>Hình thức làm việc</h2>
             <p>{{profiles.desiredWorkingForm}}</p>
           </div>
+
           <ng-template [ngIf]="profiles.academicLevel">
             <div>
               <h2>Trình độ học vấn</h2>
               <p>{{profiles.academicLevel.code}}</p>
             </div>
           </ng-template>
-
         </div>
+
         <div class="ml-5">
           <div>
             <h2>Skills</h2>
             <p>{{profiles.skill}}</p>
           </div>
+
           <div>
             <h2>Kinh nghiệm </h2>
             <p>{{profiles.numberYearsExperience}} năm</p>
@@ -168,10 +171,10 @@
       </div>
     </ng-template>
   </div>
+
   <ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="displayPositionReason = $event"
                     [content]="this.jobRegister.reason"></ngx-popup-reason>
 </ng-template>
-
 
 <p-dialog header="Nhập lý do" [(visible)]="displayPositionInput" [position]="'top'" [modal]="true"
           [style]="{width: '50vw'}" [baseZIndex]="10000"
@@ -179,6 +182,7 @@
   <div class="container text-center">
     <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="reasonDto.reason"></textarea>
   </div>
+
   <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" type="submit" (click)="onRefuse()" label="Yes" class="p-button-text"></p-button>
     <p-button icon="pi pi-times" (click)="displayPositionInput = false" label="No" class="ml-2"></p-button>

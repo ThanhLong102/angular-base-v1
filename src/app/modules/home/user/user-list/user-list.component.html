@@ -1,15 +1,29 @@
-<div class="d-flex container mt-3 mb-5">
+<div class="mt-2 mb-5">
+  <div class="row col-md-12">
+    <div class="col-md-4">
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedUserName" placeholder="Tên người đăng tuyển" field="userName" ></p-autoComplete>
+    </div>
 
-  <p-autoComplete class="mr-5" [(ngModel)]="selectedUserName" placeholder="Tên người dùng..." field="userName" ></p-autoComplete>
+    <div class="col-md-4">
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedEmail" placeholder="Email" field="email"></p-autoComplete>
+    </div>
 
-  <p-autoComplete class="mr-5" [(ngModel)]="selectedEmail" placeholder="Email..." field="email" ></p-autoComplete>
+    <div class="col-md-4">
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedPhoneNumber" placeholder="Số điện thoại" field="phoneNumber"></p-autoComplete>
+    </div>
+  </div>
 
-  <p-autoComplete class="mr-5" [(ngModel)]="selectedPhoneNumber" placeholder="Số điện thoại..." field="phoneNumber" ></p-autoComplete>
+  <div class="row container-fluid col-md-12 mt-5">
+    <div class="col-md-9">
+      <div class="col-md-4 float-right">
+        <p-button [style]="{'minWidth':'100%'}" label="Tìm Kiếm" icon="pi pi-search" iconPos="right" [loading]="" (onClick)="onSearch()"></p-button>
+      </div>
+    </div>
 
-  <p-button class="mr-2" label="Tìm kiếm" icon="pi pi-search" iconPos="right" [loading]="" (onClick)="onSearch()"></p-button>
-
-  <p-button class="mr-2" label="Thêm JE" icon="pi pi-user-plus" iconPos="right" [loading]="" (onClick)="onAddJe()"></p-button>
-
+    <div class="col-md-3">
+      <p-button label="Thêm Người Đăng Tuyển" icon="pi pi-user-plus" iconPos="right" [loading]="" (onClick)="onAddJe()"></p-button>
+    </div>
+  </div>
 </div>
 
 <ngx-user-title *ngFor="let user of users" [user]="user"></ngx-user-title>

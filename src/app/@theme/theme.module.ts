@@ -13,6 +13,7 @@ import {
   NbIconModule,
   NbThemeModule,
 } from '@nebular/theme';
+
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
@@ -22,6 +23,7 @@ import {
   SearchInputComponent,
   TinyMCEComponent,
 } from './components';
+
 import {
   CapitalizePipe,
   PluralPipe,
@@ -29,11 +31,13 @@ import {
   TimingPipe,
   NumberWithCommasPipe,
 } from './pipes';
+
 import {
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
 } from './layouts';
+
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
@@ -53,6 +57,7 @@ const NB_MODULES = [
   NbIconModule,
   NbEvaIconsModule,
 ];
+
 const COMPONENTS = [
   HeaderComponent,
   FooterComponent,
@@ -62,6 +67,7 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
 ];
+
 const PIPES = [
   CapitalizePipe,
   PluralPipe,
