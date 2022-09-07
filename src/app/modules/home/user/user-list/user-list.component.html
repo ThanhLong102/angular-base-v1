@@ -1,31 +1,38 @@
-<div class="mt-2 mb-5">
-  <div class="row col-md-12">
+<div class="mt-2 mb-5 container">
+  <div class="row">
     <div class="col-md-4">
-      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedUserName" placeholder="Tên người đăng tuyển" field="userName" ></p-autoComplete>
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedUserName" placeholder="Tên người đăng tuyển"
+                      field="userName"></p-autoComplete>
     </div>
 
     <div class="col-md-4">
-      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedEmail" placeholder="Email" field="email"></p-autoComplete>
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedEmail" placeholder="Email"
+                      field="email"></p-autoComplete>
     </div>
 
     <div class="col-md-4">
-      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedPhoneNumber" placeholder="Số điện thoại" field="phoneNumber"></p-autoComplete>
+      <p-autoComplete [style]="{'minWidth':'100%'}" [(ngModel)]="selectedPhoneNumber" placeholder="Số điện thoại"
+                      field="phoneNumber"></p-autoComplete>
     </div>
   </div>
 
   <div class="row container-fluid col-md-12 mt-5">
     <div class="col-md-9">
       <div class="col-md-4 float-right">
-        <p-button [style]="{'minWidth':'100%'}" label="Tìm Kiếm" icon="pi pi-search" iconPos="right" [loading]="" (onClick)="onSearch()"></p-button>
+        <p-button [style]="{'minWidth':'100%'}" label="Tìm Kiếm" icon="pi pi-search" iconPos="right" [loading]=""
+                  (onClick)="onSearch()"></p-button>
       </div>
     </div>
 
     <div class="col-md-3">
-      <p-button label="Thêm Người Đăng Tuyển" icon="pi pi-user-plus" iconPos="right" [loading]="" (onClick)="onAddJe()"></p-button>
+      <p-button label="Thêm Người Đăng Tuyển" icon="pi pi-user-plus" iconPos="right" [loading]=""
+                (onClick)="onAddJe()"></p-button>
     </div>
   </div>
 </div>
+<div class="d-flex flex-wrap">
+  <ngx-user-title *ngFor="let user of users" [user]="user"></ngx-user-title>
+</div>
 
-<ngx-user-title *ngFor="let user of users" [user]="user"></ngx-user-title>
-
-<p-paginator [rows]="2" [totalRecords]="totalRecords" [rowsPerPageOptions]="[2,5,10]" (onPageChange)="paginate($event)"></p-paginator>
+<p-paginator [rows]="2" [totalRecords]="totalRecords" [rowsPerPageOptions]="[3,6,9]"
+             (onPageChange)="paginate($event)"></p-paginator>

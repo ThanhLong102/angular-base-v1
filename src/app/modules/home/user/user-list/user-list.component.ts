@@ -45,7 +45,7 @@ export class UserListComponent implements OnInit {
     // eslint-disable-next-line max-len
     this.searchUser = {email: this.selectedEmail, phoneNumber: this.selectedPhoneNumber, userName: this.selectedUserName};
     this.page = 0;
-    this.size = 2;
+    this.size = 3;
     this.totalRecords = 5;
     this.sortNumber = 1;
   }
