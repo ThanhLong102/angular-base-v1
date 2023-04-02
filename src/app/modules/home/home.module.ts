@@ -27,9 +27,10 @@ import {UserDetailsComponent} from './user/user-details/user-details.component';
 import {UserTitleComponent} from './user/user-title/user-title.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
 import {AuthJeGuard} from '../../@core/guards/authJe.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 import {ChartModule} from 'primeng/chart';
-import { TagInfoComponent } from './dashboard/tag-info/tag-info.component';
+import {TagInfoComponent} from './dashboard/tag-info/tag-info.component';
+import {ToastModule} from 'primeng/toast';
 
 const routes: Routes = [{
   path: '',
@@ -37,7 +38,7 @@ const routes: Routes = [{
   children: [
     {
       path: 'dashboard',
-      component : DashboardComponent,
+      component: DashboardComponent,
     },
     {
       path: 'profile',
@@ -125,6 +126,7 @@ const routes: Routes = [{
     InputTextareaModule,
     PrimengModule,
     ChartModule,
+    ToastModule,
   ],
   exports: [],
 })

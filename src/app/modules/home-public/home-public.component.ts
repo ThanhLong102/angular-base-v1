@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {User} from '../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../service/user.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-home-public',
@@ -12,7 +13,8 @@ import {UserService} from '../../service/user.service';
 export class HomePublicComponent implements OnInit {
   user: any;
 
-  constructor(private readonly router: Router, private userService: UserService) {
+  constructor(private readonly router: Router, private userService: UserService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -23,10 +25,9 @@ export class HomePublicComponent implements OnInit {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
-        console.log('roles', data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }

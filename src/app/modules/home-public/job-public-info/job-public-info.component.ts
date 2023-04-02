@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Job} from '../../../models/model/Job';
 import {JobService} from '../../../service/job.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-public-info',
@@ -19,7 +20,9 @@ export class JobPublicInfoComponent implements OnInit {
   totalPageJobDues: number;
   totalPageJobHighSalary: number;
 
-  constructor(private jobService: JobService,private readonly router: Router) { }
+  constructor(private jobService: JobService, private readonly router: Router,
+              private messageService: MessageService) {
+  }
 
   ngOnInit(): void {
     this.getInitData();
@@ -28,12 +31,12 @@ export class JobPublicInfoComponent implements OnInit {
     this.getJobDue();
   }
 
-  getInitData(){
+  getInitData() {
     this.page = 0;
     this.size = 20;
     this.totalPageJobNews = 1;
     this.totalPageJobDues = 1;
-    this.totalPageJobHighSalary= 1;
+    this.totalPageJobHighSalary = 1;
   }
 
   public getJobNew() {
@@ -43,7 +46,7 @@ export class JobPublicInfoComponent implements OnInit {
         this.totalPageJobNews = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -55,10 +58,11 @@ export class JobPublicInfoComponent implements OnInit {
         this.totalPageJobHighSalary = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
+
   public getJobDue() {
     this.jobService.getJobDue(5, this.page, this.size).subscribe(
       (data: any) => {
@@ -66,7 +70,7 @@ export class JobPublicInfoComponent implements OnInit {
         this.totalPageJobDues = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }

@@ -15,6 +15,7 @@ import * as SockJS from 'sockjs-client';
 import {Notifications} from '../../../../models/model/Notifications';
 import {Type} from '../../../../models/model/Type';
 import {Job} from '../../../../models/model/Job';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-add',
@@ -43,7 +44,8 @@ export class JobAddComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private jobService: JobService,
               private userService: UserService,
-              private readonly router: Router) { }
+              private readonly router: Router,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.rfContact = this.fb.group({
@@ -104,7 +106,7 @@ export class JobAddComponent implements OnInit {
         alert('Add thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -115,7 +117,7 @@ export class JobAddComponent implements OnInit {
         this.jobPositions = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -125,7 +127,7 @@ export class JobAddComponent implements OnInit {
         this.workingForms = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -135,7 +137,7 @@ export class JobAddComponent implements OnInit {
         this.academicLevels = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -146,7 +148,7 @@ export class JobAddComponent implements OnInit {
         this.ranks = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -157,7 +159,7 @@ export class JobAddComponent implements OnInit {
         this.jes = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -168,7 +170,7 @@ export class JobAddComponent implements OnInit {
         this.admin = data[0];
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -192,7 +194,7 @@ export class JobAddComponent implements OnInit {
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

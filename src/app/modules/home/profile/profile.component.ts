@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {SessionService} from '../../../@core/services/session.service';
 import {UserService} from '../../../service/user.service';
 import {ProfileService} from './profile.service';
@@ -16,14 +16,12 @@ import {Router} from '@angular/router';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  [x: string]: any;
-
   formProfile: FormGroup;
   user: User;
   username: string;
   avatarUrl: string;
-  fileAvatar: File;
   birthday: string;
+  file: File;
   currentDate = new Date();
 
   constructor(
@@ -33,26 +31,25 @@ export class ProfileComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private uploadService: UploadFileService,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private messageService: MessageService,
+  ) {
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.getUser();
-    console.log('user form' + this.user);
   }
 
   initForm() {
     const birthday = new Date(this.user.birthday);
-    // eslint-disable-next-line max-len
-    this.birthday = `${birthday.getDate()}/${birthday.getMonth()}/${birthday.getFullYear()} ${birthday.getHours()}:${birthday.getMinutes()}`;
-    console.log('sinh nhat', this.birthday);
+    this.birthday = `${birthday.getDate()}/${birthday.getMonth() + 1}/${birthday.getFullYear()}`;
     this.username = this.userService.getDecodedAccessToken().sub;
     this.formProfile = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
-      // eslint-disable-next-line max-len
-      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(8)
+        , Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]],
       birthday: ['', Validators.required],
       homeTown: [''],
       gender: [''],
@@ -68,7 +65,7 @@ export class ProfileComponent implements OnInit {
         this.initForm();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -93,33 +90,41 @@ export class ProfileComponent implements OnInit {
     this.user.userName = token.sub;
     this.userService.updateUser(this.user).subscribe(
       (data: any) => {
-        if (this.fileAvatar) {
+        if (this.file) {
           this.uploadAvatar();
         }
         if (data) {
-          alert('Câp nhập thành công');
+          debugger;
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Câp nhập thành công'});
         } else {
-          alert('Cập nhập thất bại');
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Cập nhập thất bại'});
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
-    this.router.navigate(['/home/job/list']).then(r => console.log(r));
+    this.router.navigate(['/home']).then();
   }
 
-  onSelectedAvatar(event) {
-    this.fileAvatar = event.currentFiles[0];
-    console.log('day la file', this.fileAvatar);
-  }
+  changeAvatar(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(this.file);
+      reader.onload = () => {
+        // @ts-ignore
+        this.avatarUrl = reader.result;
+      };
+    }
+  };
 
   uploadAvatar() {
-    this.uploadService.uploadAvatar(this.fileAvatar, this.user.id).subscribe(
-      (data: any) => {
+    this.uploadService.uploadAvatar(this.file, this.user.id).subscribe(
+      () => {
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -133,5 +138,9 @@ export class ProfileComponent implements OnInit {
       homeTown: this.user.homeTown,
       gender: this.user.gender,
     });
+  }
+
+  show() {
+    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Message Content'});
   }
 }

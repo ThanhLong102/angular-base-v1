@@ -1,16 +1,19 @@
 <ng-template [ngIf]="user">
   <p-card>
-    <h1 class="container-fluid text-center" >Thông Tin Cá Nhân</h1>
+    <h1 class="container-fluid text-center">Thông Tin Cá Nhân</h1>
 
     <form [formGroup]="formProfile" (ngSubmit)="onSubmit()">
       <ng-template [ngIf]="user">
         <div class="container-fluid text-center">
-          <img [style]="{'width':'200px', 'border-radius': '100%', 'margin': '0 auto 20px'}" src="{{this.avatarUrl}}" alt="Avatar">
+          <img [style]="{'width':'200px', 'border-radius': '100%', 'margin': '0 auto 20px'}" src="{{this.avatarUrl}}"
+               alt="Avatar">
         </div>
 
         <div class=" text-center mb-5">
-          <p-fileUpload mode="basic" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*"
-                        [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+            <input type="file" accept="image/*" #avatarChooser style="display: none"
+                   (change)="changeAvatar($event)"/>
+            <button type="button" pButton pRipple label="Chọn ảnh đại diện" icon="pi pi-plus"
+                    (click)="avatarChooser.click()"></button>
         </div>
       </ng-template>
 
@@ -64,7 +67,9 @@
           <div class="row">
             <label class="label col-3 col-form-label">Ngày sinh</label>
             <div class="col-9">
-              <p-calendar  [style]="{'minWidth':'100%'}" formControlName="birthday" [showIcon]="true" inputId="time" [maxDate]="currentDate"
+              <p-calendar [style]="{'minWidth':'100%'}" formControlName="birthday" [showIcon]="true"
+                          dateFormat="d/m/yy"
+                          [maxDate]="currentDate"
                           [placeholder]="birthday"></p-calendar>
             </div>
           </div>

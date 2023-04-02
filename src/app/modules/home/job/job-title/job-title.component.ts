@@ -8,6 +8,7 @@ import {StatusDto} from '../../../../models/Dto/StatusDto';
 // @ts-ignore
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-title',
@@ -23,7 +24,7 @@ export class JobTitleComponent implements OnInit {
   displayPositionReason: boolean;
   currentDate = new Date().getTime();
 
-  constructor(private readonly router: Router, private jobService: JobService) {
+  constructor(private readonly router: Router, private jobService: JobService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class JobTitleComponent implements OnInit {
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -91,7 +92,7 @@ export class JobTitleComponent implements OnInit {
     autoTable(doc, {
       columns: this.exportColumns,
       body: this.jobs,
-      didDrawPage: (dataArg) => {
+      didDrawPage: () => {
         doc.text('  Job Jd', 10, 20);
       },
       styles: {

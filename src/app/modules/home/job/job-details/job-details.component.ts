@@ -7,16 +7,17 @@ import {UserService} from '../../../../service/user.service';
 import {User} from '../../../../models/model/User';
 import {StatusDto} from '../../../../models/Dto/StatusDto';
 import {ReasonDto} from '../../../../models/Dto/ReasonDto';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-details',
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.scss'],
 })
-export class JobDetailsComponent implements OnInit{
+export class JobDetailsComponent implements OnInit {
   job: Job;
   user: User;
-  statusDto: StatusDto ;
+  statusDto: StatusDto;
   reasonDto: ReasonDto;
   displayPosition: boolean;
   position: string;
@@ -24,7 +25,10 @@ export class JobDetailsComponent implements OnInit{
   reason: string;
 
   // eslint-disable-next-line max-len
-  constructor(private readonly route: ActivatedRoute, private jobService: JobService , private userService: UserService, private readonly router: Router) {
+  constructor(private readonly route: ActivatedRoute, private jobService: JobService
+    , private userService: UserService, private readonly router: Router,
+              private messageService: MessageService,
+  ) {
     this.getUser();
   }
 
@@ -40,7 +44,7 @@ export class JobDetailsComponent implements OnInit{
         this.job = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -54,10 +58,10 @@ export class JobDetailsComponent implements OnInit{
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
-        console.log('roles',data.roles);
+        console.log('roles', data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -67,26 +71,26 @@ export class JobDetailsComponent implements OnInit{
     this.getUserByUserName(token.sub);
   }
 
-  public updateStatusJob(){
+  public updateStatusJob() {
     this.jobService.updateStatusJob(this.statusDto).subscribe(
       (data: any) => {
-        this.job.statusJob =data.statusJob;
+        this.job.statusJob = data.statusJob;
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
 
-  public updateReason(){
+  public updateReason() {
     this.jobService.updateReason(this.reasonDto).subscribe(
       (data: any) => {
-        this.job.statusJob =data.statusJob;
+        this.job.statusJob = data.statusJob;
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -99,8 +103,8 @@ export class JobDetailsComponent implements OnInit{
     this.router.navigate(['/home-public/job-detail', id]).then(r => console.log(r));
   }
 
-  getInitStatusDto(){
-    this.statusDto ={jobId:1,statusId:1};
+  getInitStatusDto() {
+    this.statusDto = {jobId: 1, statusId: 1};
   }
 
   onBrowse() {
@@ -140,7 +144,7 @@ export class JobDetailsComponent implements OnInit{
   }
 
   onRefuse() {
-    console.log('reasonDto',this.reasonDto);
+    console.log('reasonDto', this.reasonDto);
     this.reasonDto.jobId = this.job.id;
     this.reasonDto.statusId = 5;
     this.updateReason();

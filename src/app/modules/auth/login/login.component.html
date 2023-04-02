@@ -1,32 +1,29 @@
 <form [formGroup]="formLogin">
   <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mb-5">
-    <h2 class="container-fluid text-center ">Đăng Nhập</h2>
+    <h2 class="container-fluid text-center">Đăng Nhập</h2>
   </div>
 
-  <div class="p-float-label mb-4">
-    <input class="custom-input" formControlName="userName" type="text" pInputText />
-    <label >Tên tài khoản</label>
-    <small class="col alert text-danger" role="alert"
-           *ngIf="formLogin.get('userName')?.errors?.required && formLogin.get('userName')?.touched">
-      Bạn phải điền tên tài khoản !
-    </small>
+  <div class="container-fluid mt-5">
+    <mat-form-field appearance="outline">
+      <mat-label>Tên tài khoản</mat-label>
+      <input matInput placeholder="Nhập tên đăng nhập" formControlName="userName">
+      <mat-error *ngIf="formLogin.get('userName')?.errors?.required && formLogin.get('userName')?.touched">
+        Bạn phải điền tên tài khoản !
+      </mat-error>
+    </mat-form-field>
   </div>
-
-  <div class="p-float-label mb-3">
-    <input class="custom-input" formControlName="password" type="password" pInputText />
-    <label >Mật khẩu</label>
-    <small class="col alert text-danger" role="alert"
-           *ngIf="formLogin.get('password')?.errors?.required && formLogin.get('password')?.touched">
-      Bạn phải nhập điền mật khẩu !
-    </small>
-  </div>
-
-  <div class="text-danger">
-    <span>---báo lỗi login không thành công và sai tài khoản, mật khẩu---</span>
+  <div class="container-fluid mt-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Mật khẩu</mat-label>
+      <input matInput placeholder="Nhập mật khẩu" formControlName="password" type="password">
+      <mat-error *ngIf="formLogin.get('password')?.errors?.required && formLogin.get('password')?.touched">
+        Bạn phải nhập điền mật khẩu !
+      </mat-error>
+    </mat-form-field>
   </div>
 
   <div class="d-flex justify-content-between align-items-center mt-4">
-    <a class="text-body" style="cursor: pointer;" (click)="forgotPassword()">Quên mật khẩu.</a>
+    <a class="text-primary under" style="cursor: pointer;" (click)="forgotPassword()"><u>Quên mật khẩu.</u></a>
   </div>
 
   <div class="text-center text-lg-start mt-4 pt-2">
@@ -34,7 +31,7 @@
 
     <p class="fw-bold mt-2 pt-1 mb-0 mt-4">
       <span>Chưa có tài khoản ? </span>
-      <a class="linkDanger" style="cursor: pointer;"  (click)="register()">Đăng ký</a>
+      <a class="text-primary" style="cursor: pointer;" (click)="register()">Đăng ký</a>
     </p>
   </div>
 </form>

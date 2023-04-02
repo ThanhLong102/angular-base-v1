@@ -4,7 +4,7 @@ import {Job} from '../../../../models/model/Job';
 import {JobService} from '../../../../service/job.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {StatusJob} from '../../../../models/model/StatusJob';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {Router} from '@angular/router';
 import {User} from '../../../../models/model/User';
 import {UserService} from '../../../../service/user.service';
@@ -32,7 +32,9 @@ export class JobListComponent implements OnInit {
   sortNumber: number;
   rangeValues: number[] = [0,200];
 
-  constructor(public jobService: JobService,private readonly router: Router,private userService: UserService) {
+  constructor(public jobService: JobService,
+              private readonly router: Router,private userService: UserService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -61,7 +63,7 @@ export class JobListComponent implements OnInit {
         this.statusJobs = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -101,7 +103,7 @@ export class JobListComponent implements OnInit {
         this.totalRecords = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -114,7 +116,7 @@ export class JobListComponent implements OnInit {
         this.totalRecords = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -141,7 +143,7 @@ export class JobListComponent implements OnInit {
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

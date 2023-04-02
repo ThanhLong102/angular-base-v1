@@ -3,6 +3,7 @@ import {JobRegisterService} from '../../../../service/jobRegister.service';
 import {JobRegister} from '../../../../models/model/JobRegister';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-list-job-register',
@@ -13,7 +14,8 @@ export class ListJobRegisterComponent implements OnInit {
 
   public jobRegisters: JobRegister[];
 
-  constructor(public jobRegisterService: JobRegisterService,private readonly route: ActivatedRoute) {
+  constructor(public jobRegisterService: JobRegisterService,private readonly route: ActivatedRoute,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -26,7 +28,7 @@ export class ListJobRegisterComponent implements OnInit {
         this.jobRegisters = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

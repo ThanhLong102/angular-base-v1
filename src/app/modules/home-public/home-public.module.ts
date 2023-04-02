@@ -22,6 +22,7 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 import {SliderModule} from 'primeng/slider';
 import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
+import {ToastModule} from "primeng/toast";
 
 const routes: Routes = [{
   path: '',
@@ -77,6 +78,7 @@ const routes: Routes = [{
     SliderModule,
     DropdownModule,
     PaginatorModule,
+    ToastModule,
   ],
 })
 export class HomePublicModule { }

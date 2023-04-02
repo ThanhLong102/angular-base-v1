@@ -1,36 +1,31 @@
-<div class="d-flex justify-content-lg-start container p-3 mb-4" style="width: 500px">
-<section id="pricing" class="pricing">
-    <!--  <div class="container" data-aos="fade-up">-->
-    <div class="row gy-4">
-      <ng-template [ngIf]="user">
-
-        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-          <div class="box">
-            <h3 style="color: #07d5c0;" (click)="onReadUserDetail(this.user.id)">{{this.user.userName}}</h3>
-
-            <div class="mt-5 mb-5">
-              <p-avatar [image]="avatar" size="xlarge"></p-avatar>
-            </div>
-
-            <ul>
-              <li>{{user.name}}</li>
-              <li>{{this.user.birthday| date}}</li>
-              <li>{{this.user.gender}}</li>
-            </ul>
-
-            <ng-template [ngIf]="user.active===false">
-              <p-button class="" label="Tái kích hoạt" icon="pi pi-check" iconPos="right" [loading]=""
-                        (onClick)="onDeactivate(this.user.id)"></p-button>
-            </ng-template>
-
-            <ng-template [ngIf]="user.active===true ">
-              <p-button class="" label="Hủy kích hoạt" icon="pi pi-times" iconPos="right" [loading]=""
-                        (onClick)="onDeactivate(this.user.id)"></p-button>
-            </ng-template>
-          </div>
-        </div>
-      </ng-template>
+<div class="d-flex justify-content-lg-start p-2">
+  <ng-template [ngIf]="user">
+    <div class="card flex justify-content-center">
+      <p-card header="{{user.userName}}" subheader="{{user.email}}"
+              (click)="onReadUserDetail(user.id)"
+              [style]="{cursor: 'pointer'}"
+      >
+        <ng-template pTemplate="header">
+          <img alt="Card" [src]="avatar" width="496" height="279"/>
+        </ng-template>
+        <p>
+          <strong>{{'Quê quán: '}}</strong>
+          {{user.homeTown ? user.homeTown : 'Chưa có thông tin'}}
+        </p>
+        <p>
+          <strong>{{'Ngày sinh: '}}</strong>
+          {{user.birthday ? user.birthday : 'Chưa có thông tin'}}
+        </p>
+        <p>
+          <strong>{{'Giới tính: '}}</strong>
+          {{user.gender ? user.gender : 'Chưa có thông tin'}}
+        </p>
+        <ng-template pTemplate="footer">
+          <p-button label="Kích hoạt" icon="pi pi-check" (onClick)="onDeactivate(this.user.id)"></p-button>
+          <p-button label="Hủy" icon="pi pi-times" styleClass="p-button-secondary"
+                    [style]="{ 'margin-left': '.5em' }" (onClick)="onDeactivate(this.user.id)"></p-button>
+        </ng-template>
+      </p-card>
     </div>
-    <!--  </div>-->
-  </section>
+  </ng-template>
 </div>

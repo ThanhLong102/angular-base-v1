@@ -6,6 +6,7 @@ import { UserService } from '../../../service/user.service';
 import {User} from '../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AuthService} from '../../../service/auth.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-login',
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
               private tokenService: TokenService,
               private router: Router,
               private  userService: UserService,
+              private messageService: MessageService,
             ) {
   }
 
@@ -30,7 +32,6 @@ export class LoginComponent implements OnInit {
     this.initForm();
     if (this.tokenService.getToken()) {
       this.isLoggedIn = true;
-      // this.roles = this.tokenService.getUser().roles;
     }
   }
 
@@ -83,13 +84,13 @@ export class LoginComponent implements OnInit {
   public sendOtp(){
     this.authService.sendOtp(this.user).subscribe(
       (data: any) => {
-        alert(data.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: data.message });
         if(data.obj === true){
           this.router.navigate(['/auth/change-password/finish']).then(r => console.log(r));
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -109,7 +110,7 @@ export class LoginComponent implements OnInit {
         this.setFirstTimeLogin();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

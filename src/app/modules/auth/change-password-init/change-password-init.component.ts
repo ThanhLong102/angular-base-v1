@@ -1,8 +1,9 @@
-import {Component, OnInit, EventEmitter, Output, TemplateRef} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 // @ts-ignore
 // import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -18,6 +19,7 @@ export class ChangePasswordInitComponent implements OnInit {
               private fb: FormBuilder,
               private authService: AuthService,
               private readonly router: Router,
+              private messageService: MessageService,
               ) { }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -38,7 +40,7 @@ export class ChangePasswordInitComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

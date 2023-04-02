@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../../../../models/model/User';
 import {UserService} from '../../../../service/user.service';
@@ -30,7 +30,8 @@ export class UserListComponent implements OnInit {
   totalRecords: number;
   sortNumber: number;
 
-  constructor(public userService: UserService, private router: Router) {
+  constructor(public userService: UserService, private router: Router,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -75,7 +76,7 @@ export class UserListComponent implements OnInit {
         this.totalRecords = data.totalPage * this.size;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

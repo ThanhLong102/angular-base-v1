@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-change-password-finish',
@@ -12,10 +13,10 @@ import {Router} from '@angular/router';
 export class ChangePasswordFinishComponent implements OnInit {
   cpf: FormGroup;
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
+              private messageService: MessageService,
   ) {
   }
 
@@ -40,10 +41,10 @@ export class ChangePasswordFinishComponent implements OnInit {
         } else {
           this.router.navigate(['/auth/change-password-init']).then(r => console.log(r));
         }
-        alert(data.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: data.message});
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }

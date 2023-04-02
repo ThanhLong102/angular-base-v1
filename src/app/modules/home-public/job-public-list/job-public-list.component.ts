@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Job} from '../../../models/model/Job';
 import {User} from '../../../models/model/User';
 import {SearchJob} from '../../../models/job/SearchJob';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {JobService} from '../../../service/job.service';
 import {Router} from '@angular/router';
 import {UserService} from '../../../service/user.service';
@@ -30,7 +30,8 @@ export class JobPublicListComponent implements OnInit {
   sortNumber: number;
   rangeValues: number[] = [0,200];
 
-  constructor(public jobService: JobService,private readonly router: Router,private userService: UserService) {
+  constructor(public jobService: JobService,private readonly router: Router,private userService: UserService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -73,7 +74,7 @@ export class JobPublicListComponent implements OnInit {
         this.totalRecords = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -86,7 +87,7 @@ export class JobPublicListComponent implements OnInit {
         this.totalRecords = data.totalPage;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -113,7 +114,7 @@ export class JobPublicListComponent implements OnInit {
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

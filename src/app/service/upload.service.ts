@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -10,34 +9,31 @@ import {tap} from 'rxjs/operators';
 export class UploadFileService {
   private apiPublicUrl = environment.apiPublicUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public formData = new FormData();
 
-  public upload(file: File,userName: string, jobId): Observable<any> {
+  public upload(file: File, userName: string, jobId): Observable<any> {
     this.resetForm();
     this.formData.append('file', file);
     this.formData.append('username', userName);
     this.formData.append('jobId', jobId);
-    return this.http.post(`${this.apiPublicUrl}`+'upload',this.formData, {
+    return this.http.post(`${this.apiPublicUrl}` + 'upload', this.formData, {
       reportProgress: true,
       responseType: 'json',
-    }).pipe(
-      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
-    );
+    });
   }
 
-  public uploadAvatar(file: File,userId: any): Observable<any> {
+  public uploadAvatar(file: File, userId: any): Observable<any> {
     this.resetForm();
     this.formData.append('file', file);
     this.formData.append('userId', userId);
-    return this.http.post(`${this.apiPublicUrl}`+'uploadAvatar',this.formData, {
+    return this.http.post(`${this.apiPublicUrl}` + 'uploadAvatar', this.formData, {
       reportProgress: true,
       responseType: 'json',
-    }).pipe(
-      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
-    );
+    });
   }
 
   resetForm() {

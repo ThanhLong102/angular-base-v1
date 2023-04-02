@@ -11,6 +11,7 @@ import {UserService} from '../../../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Job} from '../../../../models/model/Job';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-update',
@@ -51,7 +52,8 @@ export class JobUpdateComponent implements OnInit {
               private jobService: JobService,
               private userService: UserService,
               private readonly router: Router,
-              private readonly route: ActivatedRoute) {
+              private readonly route: ActivatedRoute,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -117,7 +119,7 @@ export class JobUpdateComponent implements OnInit {
         this.jobPositions = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -128,7 +130,7 @@ export class JobUpdateComponent implements OnInit {
         this.workingForms = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -139,7 +141,7 @@ export class JobUpdateComponent implements OnInit {
         this.academicLevels = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -150,7 +152,7 @@ export class JobUpdateComponent implements OnInit {
         this.ranks = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -161,7 +163,7 @@ export class JobUpdateComponent implements OnInit {
         this.contacts = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -173,7 +175,7 @@ export class JobUpdateComponent implements OnInit {
         this.getInitData();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -198,7 +200,7 @@ export class JobUpdateComponent implements OnInit {
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -237,7 +239,7 @@ export class JobUpdateComponent implements OnInit {
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

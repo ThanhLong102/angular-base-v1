@@ -6,8 +6,10 @@
              style="width:200px; border-radius: 50%;  margin: 0 auto 20px;">
       </div>
       <div class="row mb-4" style="margin-left: 45%;">
-        <p-fileUpload mode="basic" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)"
-                      accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+        <input type="file" accept="image/*" #avatarChooser style="display: none"
+               (change)="changeAvatar($event)"/>
+        <button type="button" pButton pRipple label="Chọn ảnh đại diện" icon="pi pi-plus"
+                (click)="avatarChooser.click()"></button>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6" style="display: none">
@@ -15,23 +17,24 @@
             <label class="label col-3 col-form-label ">Họ và Tên</label>
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="name" [(ngModel)]="user.name">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('name')?.errors?.required && formUser.get('name')?.touched">
+                Bạn phải nhập họ tên!
+              </small>
             </div>
           </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('name')?.errors?.required && formUser.get('name')?.touched">
-            Bạn phải nhập họ tên!
-          </div>
+
         </div>
         <div class="form-group col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label ">Họ và Tên</label>
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="name" [(ngModel)]="user.name">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('name')?.errors?.required && formUser.get('name')?.touched">
+                Bạn phải nhập họ tên!
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('name')?.errors?.required && formUser.get('name')?.touched">
-            Bạn phải nhập họ tên!
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -39,11 +42,11 @@
             <label class="label col-3 col-form-label">Email</label>
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="email" [(ngModel)]="user.email">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('email')?.errors?.required && formUser.get('email')?.touched">
+                Bạn phải nhập gmail!
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('email')?.errors?.required && formUser.get('email')?.touched">
-            Bạn phải nhập gmail!
           </div>
         </div>
       </div>
@@ -54,26 +57,27 @@
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="phoneNumber"
                      [(ngModel)]="user.phoneNumber">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('phoneNumber')?.errors?.required && formUser.get('phoneNumber')?.touched">
+                Bạn phải nhập số điện thoại!
+              </small>
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('phoneNumber')?.errors?.pattern && formUser.get('phoneNumber')?.touched">
+                Bạn phải nhập đúng định dạng số điện thoại!
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('phoneNumber')?.errors?.required && formUser.get('phoneNumber')?.touched">
-            Bạn phải nhập số điện thoại!
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('phoneNumber')?.errors?.pattern && formUser.get('phoneNumber')?.touched">
-            Bạn phải nhập đúng định dạng số điện thoại!
           </div>
         </div>
         <div class="col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label">Ngày sinh</label>
             <div class="col-9">
-              <p-calendar [(ngModel)]="user.birthday" [showTime]="true" inputId="time" formControlName="birthDay"
+              <p-calendar [style]="{'minWidth':'100%'}" formControlName="birthday" [showIcon]="true"
+                          dateFormat="d/m/yy"
+                          [maxDate]="currentDate"
                           [placeholder]="birthday"></p-calendar>
             </div>
           </div>
-
         </div>
 
       </div>
@@ -102,7 +106,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div class="form-row">
@@ -119,11 +122,11 @@
                   {{ academicLevel.code }}
                 </option>
               </select>
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('academicLevel')?.errors?.required && formUser.get('academicLevel')?.touched">
+                Bạn phải nhập trình độ học vấn!
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('academicLevel')?.errors?.required && formUser.get('academicLevel')?.touched">
-            Bạn phải nhập trình độ học vấn!
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -132,11 +135,11 @@
             <div class="col-9">
               <input type="number" pInputText class="form-control" formControlName="desiredSalary" min="0"
                      [(ngModel)]="profiles.desiredSalary">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('desiredSalary')?.errors?.required && formUser.get('desiredSalary')?.touched">
+                Bạn phải nhập mức lương mong muốn !
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('desiredSalary')?.errors?.required && formUser.get('desiredSalary')?.touched">
-            Bạn phải nhập mức lương mong muốn !
           </div>
         </div>
       </div>
@@ -147,11 +150,11 @@
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="desiredWorkingAddress"
                      [(ngModel)]="profiles.desiredWorkingAddress">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('desiredWorkingAddress')?.errors?.required && formUser.get('desiredWorkingAddress')?.touched">
+                Bạn phải nhập địa chỉa làm việc mong muốn !
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('desiredWorkingAddress')?.errors?.required && formUser.get('desiredWorkingAddress')?.touched">
-            Bạn phải nhập địa chỉa làm việc mong muốn !
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -160,16 +163,15 @@
             <div class="col-9">
               <input type="number" pInputText class="form-control" formControlName="numberYearsExperience" min="0"
                      [(ngModel)]="profiles.numberYearsExperience">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('numberYearsExperience')?.errors?.required && formUser.get('numberYearsExperience')?.touched">
+                Bạn phải nhập số năm kinh nghiệm !
+              </small>
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('numberYearsExperience')?.errors?.pattern && formUser.get('numberYearsExperience')?.touched">
+                Bạn chỉ được nhập số nguyên dương !
+              </small>
             </div>
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('numberYearsExperience')?.errors?.required && formUser.get('numberYearsExperience')?.touched">
-            Bạn phải nhập số năm kinh nghiệm !
-          </div>
-
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('numberYearsExperience')?.errors?.pattern && formUser.get('numberYearsExperience')?.touched">
-            Bạn chỉ được nhập số nguyên dương !
           </div>
         </div>
       </div>
@@ -181,12 +183,11 @@
             <label class="label col-3 col-form-label ">Kĩ năng</label>
             <div class="col-9">
               <input type="text" pInputText class="form-control" formControlName="skill" [(ngModel)]="profiles.skill">
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('skill')?.errors?.required && formUser.get('skill')?.touched">
+                Bạn phải nhập trình độ học vấn!
+              </small>
             </div>
-
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('skill')?.errors?.required && formUser.get('skill')?.touched">
-            Bạn phải nhập trình độ học vấn!
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -201,12 +202,11 @@
                 <option value="Fulltime">Fulltime</option>
                 <option value="Parttime">Parttime</option>
               </select>
+              <small class="col alert text-danger" role="alert"
+                     *ngIf="formUser.get('desiredWorkingForm')?.errors?.required && formUser.get('desiredWorkingForm')?.touched">
+                Bạn phải nhập hình thức làm việc mong muốn !
+              </small>
             </div>
-
-          </div>
-          <div class="col alert alert-danger" role="alert"
-               *ngIf="formUser.get('desiredWorkingForm')?.errors?.required && formUser.get('desiredWorkingForm')?.touched">
-            Bạn phải nhập hình thức làm việc mong muốn !
           </div>
         </div>
       </div>

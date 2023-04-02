@@ -19,6 +19,7 @@ import {JobRegister} from '../../../models/model/JobRegister';
 import {debounceTime} from 'rxjs/operators';
 import {ReasonDto} from '../../../models/Dto/ReasonDto';
 import {JobRegisterService} from '../../../service/jobRegister.service';
+import {MessageService} from 'primeng/api';
 
 
 @Component({
@@ -60,13 +61,14 @@ export class JobPublicDetailComponent implements OnInit {
 
   jobRegister: JobRegister;
 
-  displayPositionInput= false;
+  displayPositionInput = false;
   reasonDto: ReasonDto;
 
 
   constructor(private readonly route: ActivatedRoute, private jobService: JobService, private userService: UserService
     , private readonly router: Router, private fb: FormBuilder, private uploadService: UploadFileService,
-              private jobRegisterService: JobRegisterService,private profilesService: ProfilesService) {
+              private jobRegisterService: JobRegisterService, private profilesService: ProfilesService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -75,7 +77,7 @@ export class JobPublicDetailComponent implements OnInit {
     this.getAcademicLevel();
     this.getWorkingForm();
     this.getUser();
-    this.reasonDto= {jobId: 0, reason: '', statusId: 0};
+    this.reasonDto = {jobId: 0, reason: '', statusId: 0};
     this.info = this.fb.group({
       description: [''],
       homeTown: ['', [Validators.required]],
@@ -93,21 +95,22 @@ export class JobPublicDetailComponent implements OnInit {
     this.connect();
   }
 
-  public addViews(){
+  public addViews() {
     this.jobService.addView(this.route.snapshot.params.id).subscribe(
-      (data: any) => {
-        console.log(data);
+      () => {
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   currentDate = new Date();
-  getInitData(){
+
+  getInitData() {
     this.profile = {
-      id:null,
+      id: null,
       academicLevel: null,
       delete: 0,
       description: '',
@@ -119,6 +122,7 @@ export class JobPublicDetailComponent implements OnInit {
       user: undefined,
     };
   }
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   get skills(): FormArray {
     return this.info.get('skills') as FormArray;
@@ -138,31 +142,30 @@ export class JobPublicDetailComponent implements OnInit {
         this.job = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
 
-  checkApply(): boolean{
+  checkApply(): boolean {
     if (!this.userService.checkProfile(this.profile)) {
-      if(!this.info.valid){
+      if (!this.info.valid) {
         return false;
       }
-      if(!this.fileAvatar){
+      if (!this.fileAvatar) {
         return false;
       }
     }
-    if(!this.fileCv){
+    if (!this.fileCv) {
       return false;
     }
-
     return true;
   }
 
   public getProfilesByUserId(): void {
     this.profilesService.getProfilesByUserId(this.user.id).subscribe(
       (data: Profiles) => {
-        if(!data){
+        if (!data) {
           this.getInitData();
         } else {
           this.profile = data;
@@ -170,7 +173,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.checkedProfile = this.userService.checkProfile(this.profile);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -181,7 +184,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.workingForms = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -192,7 +195,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.academicLevels = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -204,9 +207,9 @@ export class JobPublicDetailComponent implements OnInit {
         this.user = data;
         this.getProfilesByUserId();
         this.getJobRegister();
-      } ,
+      },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -215,7 +218,7 @@ export class JobPublicDetailComponent implements OnInit {
     const token = this.userService.getDecodedAccessToken();
     if (token) {
       this.getUserByUserName(token.sub);
-      console.log('Day la id',this.route.snapshot.params.id);
+      console.log('Day la id', this.route.snapshot.params.id);
       this.addViews();
     }
   }
@@ -226,7 +229,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.user = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -237,7 +240,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.profile = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -248,7 +251,7 @@ export class JobPublicDetailComponent implements OnInit {
         this.jobRegister = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -298,10 +301,10 @@ export class JobPublicDetailComponent implements OnInit {
   uploadCv() {
     this.uploadService.upload(this.fileCv, this.user.userName, this.job.id).subscribe(
       (data: any) => {
-        alert(data.message);
+        this.messageService.add({severity: 'success', summary: 'Success', detail: data.message});
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -309,10 +312,10 @@ export class JobPublicDetailComponent implements OnInit {
   uploadAvatar() {
     this.uploadService.uploadAvatar(this.fileAvatar, this.user.id).subscribe(
       (data: any) => {
-        alert(data.message);
+        this.messageService.add({severity: 'success', summary: 'Success', detail: data.message});
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -323,14 +326,19 @@ export class JobPublicDetailComponent implements OnInit {
       this.position = top;
       this.displayPosition = true;
     } else {
-      alert('Vui lòng đăng nhập trước');
+      this.messageService.add({severity: 'error', summary: 'Error', detail: 'Vui lòng đăng nhập trước'});
       this.router.navigate(['/auth']).then(r => console.log(r));
     }
   }
 
   onCancel() {
     // eslint-disable-next-line max-len
-    this.jobRegister.statusJobRegister = {code: 'Ứng viên đã hủy ứng tuyển', delete: false, description: 'Ứng vine đã hủy ứng tuyển', id: 6};
+    this.jobRegister.statusJobRegister = {
+      code: 'Ứng viên đã hủy ứng tuyển',
+      delete: false,
+      description: 'Ứng vine đã hủy ứng tuyển',
+      id: 6,
+    };
     this.updateJobRegister();
     this.sendRefuse();
     this.onRefuse();
@@ -364,7 +372,8 @@ export class JobPublicDetailComponent implements OnInit {
     // eslint-disable-next-line max-len
     this.notifications = {
       receiver: this.job.creator,
-      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type};
+      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type,
+    };
     this.stompClient.send('/gkz/job-register', {}, JSON.stringify(this.notifications));
   }
 
@@ -373,36 +382,38 @@ export class JobPublicDetailComponent implements OnInit {
     // eslint-disable-next-line max-len
     this.notifications = {
       receiver: this.job.creator,
-      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type};
+      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type,
+    };
     this.stompClient.send('/gkz/job-register', {}, JSON.stringify(this.notifications));
   }
 
   public getJobRegister(): void {
-    this.jobRegisterService.findByUserAndJob(this.user.id,this.job.id).subscribe(
+    this.jobRegisterService.findByUserAndJob(this.user.id, this.job.id).subscribe(
       (data: JobRegister) => {
-        if(data.statusJobRegister.id === 6){
+        if (data.statusJobRegister.id === 6) {
           this.jobRegister = null;
-        }else {
+        } else {
           this.jobRegister = data;
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
 
-  public updateReason(){
+  public updateReason() {
     this.jobRegisterService.updateReason(this.reasonDto).subscribe(
       (data: any) => {
-        this.jobRegister.statusJobRegister =data.statusJobRegister;
-        alert('Update thành công');
+        this.jobRegister.statusJobRegister = data.statusJobRegister;
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Update thành công'});
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
+
   onRefuse() {
     this.reasonDto.jobId = this.jobRegister.id;
     this.reasonDto.statusId = 6;

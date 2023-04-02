@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-registration',
@@ -14,7 +15,8 @@ export class RegistrationComponent implements OnInit {
   regi: FormGroup;
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.regi = this.fb.group({
@@ -39,7 +41,7 @@ export class RegistrationComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

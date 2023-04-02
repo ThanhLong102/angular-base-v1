@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
-import {SelectItem} from 'primeng/api';
+import {MessageService, SelectItem} from 'primeng/api';
 import {JobRegister} from '../../../../models/model/JobRegister';
 import {JobRegisterService} from '../../../../service/jobRegister.service';
 import {SearchJobRegister} from '../../../../models/job/SearchJobRegister';
@@ -28,7 +28,8 @@ export class JobRegisterListComponent implements OnInit {
   totalRecords: number;
   sortNumber: number;
 
-  constructor(public jobRegisterService: JobRegisterService) {
+  constructor(public jobRegisterService: JobRegisterService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class JobRegisterListComponent implements OnInit {
         this.statusJobs = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -101,7 +102,7 @@ export class JobRegisterListComponent implements OnInit {
         this.totalRecords = data.totalPage ;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -115,7 +116,7 @@ export class JobRegisterListComponent implements OnInit {
         this.totalRecords = data.totalPage ;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {User} from '../../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../../../service/user.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-user-title',
@@ -15,14 +16,15 @@ export class UserTitleComponent implements OnInit {
   @Input() user: User;
   avatar: string;
 
-  constructor(private readonly router: Router, private userService: UserService) {
+  constructor(private readonly router: Router, private userService: UserService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
-    if(this.user.avatarName){
+    if (this.user.avatarName) {
       this.avatar = 'http://localhost:9090/api/public/files/' + this.user.avatarName;
     } else {
-      this.avatar='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpBBnQa6qFgqUBWwrpZhSOOIWzyHoQyHbFaA&usqp=CAU';
+      this.avatar = 'http://localhost:9090/api/public/files/avatar1.png';
     }
   }
 
@@ -36,7 +38,7 @@ export class UserTitleComponent implements OnInit {
         this.user = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({severity: 'error', summary: 'Error', detail: error.message});
       },
     );
   }
@@ -46,16 +48,14 @@ export class UserTitleComponent implements OnInit {
       (data: any) => {
         if (data === true) {
           this.reloadUser();
-          alert('Cập nhật thành công');
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Đặt lịch thành công'});
         } else {
-          alert('Hủy cập nhật thất bại');
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Hủy cập nhật thất bại'});
         }
       },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
+      () => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Đặt lịch thất bại'});
       },
     );
   }
-
-
 }

@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-register-title',
@@ -27,7 +28,8 @@ export class JobRegisterTitleComponent implements OnInit {
   // eslint-disable-next-line max-len
   avatar: string;
   // eslint-disable-next-line max-len
-  constructor(private readonly router: Router,private jobRegisterService: JobRegisterService,private fb: FormBuilder ) { }
+  constructor(private readonly router: Router,private jobRegisterService: JobRegisterService,private fb: FormBuilder ,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getInitData();
@@ -86,10 +88,10 @@ export class JobRegisterTitleComponent implements OnInit {
     this.jobRegisterService.schedule(this.scheduleDto).subscribe(
       (data: any) => {
         this.jobRegister.statusJobRegister =data.statusJobRegister;
-        alert('Đặt lịch thành công');
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Đặt lịch thành công' });
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

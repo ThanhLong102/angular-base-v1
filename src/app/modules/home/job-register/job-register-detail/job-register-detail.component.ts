@@ -12,6 +12,7 @@ import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
 import { saveAs } from 'file-saver';
 import {ProfilesService} from '../../../../service/profiles.service';
 import {ReasonDto} from '../../../../models/Dto/ReasonDto';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-job-register-detail',
@@ -41,7 +42,8 @@ export class JobRegisterDetailComponent implements OnInit {
 
   constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService
               ,private profilesService: ProfilesService,
-              private userService: UserService,private fb: FormBuilder) {
+              private userService: UserService,private fb: FormBuilder,
+              private messageService: MessageService) {
     this.getUser();
   }
 
@@ -68,7 +70,7 @@ export class JobRegisterDetailComponent implements OnInit {
         this.getProfilesByUserId(data.user.id);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -79,7 +81,7 @@ export class JobRegisterDetailComponent implements OnInit {
         this.user = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -90,7 +92,7 @@ export class JobRegisterDetailComponent implements OnInit {
         this.profiles = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -101,7 +103,7 @@ export class JobRegisterDetailComponent implements OnInit {
         this.user = data;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -118,7 +120,7 @@ export class JobRegisterDetailComponent implements OnInit {
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -130,7 +132,7 @@ export class JobRegisterDetailComponent implements OnInit {
         alert('Đặt lịch thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -146,7 +148,7 @@ export class JobRegisterDetailComponent implements OnInit {
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

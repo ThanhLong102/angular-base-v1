@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'ngx-user-add',
@@ -12,7 +13,8 @@ export class UserAddComponent implements OnInit {
 
   regiJe: FormGroup;
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private messageService: MessageService) { }
 
   ngOnInit() {
     this.regiJe = this.fb.group({
@@ -37,7 +39,7 @@ export class UserAddComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

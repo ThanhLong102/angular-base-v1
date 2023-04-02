@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {JobRegister} from '../../../../models/model/JobRegister';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {User} from '../../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../../../service/user.service';
 import {Profiles} from '../../../../models/model/Profiles';
+import {MessageService} from 'primeng/api';
 
 
 
@@ -19,7 +19,8 @@ export class UserDetailsComponent implements OnInit {
   profiles: Profiles;
 
   // eslint-disable-next-line max-len
-  constructor(private readonly route: ActivatedRoute, private userService: UserService) {
+  constructor(private readonly route: ActivatedRoute, private userService: UserService,
+              private messageService: MessageService) {
     this.getUserById();
   }
 
@@ -36,7 +37,7 @@ export class UserDetailsComponent implements OnInit {
         this.getUserByUserName(this.user.userName);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -48,7 +49,7 @@ export class UserDetailsComponent implements OnInit {
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -62,7 +63,7 @@ export class UserDetailsComponent implements OnInit {
         console.log('data pass admin page: ',this.profiles);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }

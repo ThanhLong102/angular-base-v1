@@ -2,15 +2,15 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'Trang Chủ Admin',
-    icon: 'home-outline',
-    link: '/home/dashboard',
-    home: true,
-  },
-  {
     title: 'Trang Chủ Public',
     icon: 'home-outline',
     link: '/home-public',
+    home: true,
+  },
+  {
+    title: 'Thống kê',
+    icon: 'clock-outline',
+    link: '/home/dashboard',
     home: true,
   },
   {

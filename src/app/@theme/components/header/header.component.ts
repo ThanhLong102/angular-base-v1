@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NbAdjustment, NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService} from '@nebular/theme';
 
-import { LayoutService } from '../../../@core/utils';
+import {LayoutService} from '../../../@core/utils';
 import {map, takeUntil} from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { SessionService } from '../../../@core/services/session.service';
-import { Router } from '@angular/router';
+import {Subject} from 'rxjs';
+import {SessionService} from '../../../@core/services/session.service';
+import {Router} from '@angular/router';
 import {UserService} from '../../../service/user.service';
 import {User} from '../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -15,6 +15,7 @@ import {Stomp} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import {JobRegister} from '../../../models/model/JobRegister';
 import {JobRegisterService} from '../../../service/jobRegister.service';
+import {MessageService} from 'primeng/api';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  adjustment= NbAdjustment.VERTICAL;
+  adjustment = NbAdjustment.VERTICAL;
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   userPictureOnly = false;
@@ -35,11 +36,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   badgeDot: boolean;
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  picture='http://localhost:9090/api/public/files/';
+  picture = 'http://localhost:9090/api/public/files/';
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  name=this.userService.getDecodedAccessToken().sub;
+  name = this.userService.getDecodedAccessToken().sub;
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  role=this.userService.getDecodedAccessToken().auth;
+  role = this.userService.getDecodedAccessToken().auth;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   themes = [
     {
@@ -64,13 +65,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   apply = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  refuse= [];
+  refuse = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   today = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   notifyMenu = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  userMenu = [ { title: 'Trang Cá Nhân' }, { title: 'Đăng Xuất'   }];
+  userMenu = [{title: 'Trang Cá Nhân'}, {title: 'Đăng Xuất'}];
 
   private stompClient = null;
 
@@ -87,7 +88,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private router: Router,
               private notificationsService: NotificationsService,
-              private jobRegisterService: JobRegisterService) {}
+              private jobRegisterService: JobRegisterService,
+              private messageService: MessageService) {
+  }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
@@ -95,18 +98,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.getUserByUserName(token.sub);
     this.connect();
 
-    this.menuService.onItemClick().subscribe((event)=>{
-      if(event.item.title==='Đăng Xuất'){
+    this.menuService.onItemClick().subscribe((event) => {
+      if (event.item.title === 'Đăng Xuất') {
         this.sessionService.removeItem('auth-token');
         this.sessionService.removeItem('auth-user');
         this.router.navigate(['/auth/']).then(r => console.log(r));
       }
-      if(event.item.title==='Trang Cá Nhân'){
+      if (event.item.title === 'Trang Cá Nhân') {
         this.router.navigate(['/home/profile']).then(r => console.log(r));
       }
     });
 
-    const { xl } = this.breakpointService.getBreakpointsMap();
+    const {xl} = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(
         map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
@@ -116,7 +119,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.themeService.onThemeChange()
       .pipe(
-        map(({ name }) => name),
+        map(({name}) => name),
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
@@ -152,7 +155,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.picture += data.avatarName;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
@@ -162,45 +165,52 @@ export class HeaderComponent implements OnInit, OnDestroy {
       (data: Notifications[]) => {
         for (const notification of data) {
           const time = new Date(notification.createDate).toLocaleString();
-          if(this.role === 'ROLE_JE'){
+          if (this.role === 'ROLE_JE') {
             this.getJobRegister(notification);
-          }else {
-            this.notifyMenu = [...this.notifyMenu,{title: notification.sender.name+' chờ xét duyệt công việc '
-                + notification.job.name+' ('+ time+' )', link: '/home/job-detail/'+notification.job.id}];
+          } else {
+            this.notifyMenu = [...this.notifyMenu, {
+              title: notification.sender.name + ' chờ xét duyệt công việc '
+                + notification.job.name + ' (' + time + ' )', link: '/home/job-detail/' + notification.job.id,
+            }];
           }
         }
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
 
-  setNotification(notification){
+  setNotification(notification) {
     const time = new Date(notification.createDate).toLocaleString();
-    if(notification.type.id === 1){
-      this.apply = [...this.apply,{title: notification.sender.name+' đã ứng tuyển vào công ty '
-          + notification.job.name+' ('+ time+' )', link: '/home/job-register-detail/'+this.jobRegister.id}];
-    } else if(notification.type.id === 2){
-      this.refuse = [...this.refuse,{title: notification.sender.name+' đã hủy ứng tuyển vào công ty '
-          + notification.job.name+' ('+ time+' )', link:  '/home/job-register-detail/'+this.jobRegister.id}];
+    if (notification.type.id === 1) {
+      this.apply = [...this.apply, {
+        title: notification.sender.name + ' đã ứng tuyển vào công ty '
+          + notification.job.name + ' (' + time + ' )', link: '/home/job-register-detail/' + this.jobRegister.id,
+      }];
+    } else if (notification.type.id === 2) {
+      this.refuse = [...this.refuse, {
+        title: notification.sender.name + ' đã hủy ứng tuyển vào công ty '
+          + notification.job.name + ' (' + time + ' )', link: '/home/job-register-detail/' + this.jobRegister.id,
+      }];
     }
-    this.today = [...this.apply,...this.refuse];
-    this.notifyMenu = [ { title: 'Hôm nay', children:this.today}, { title: 'Ứng tuyển', children:this.apply},
-      { title: 'Từ chối ứng tuyển', children:this.refuse} ];
+    this.today = [...this.apply, ...this.refuse];
+    this.notifyMenu = [{title: 'Hôm nay', children: this.today}, {title: 'Ứng tuyển', children: this.apply},
+      {title: 'Từ chối ứng tuyển', children: this.refuse}];
   }
 
   public getJobRegister(notification): void {
-    this.jobRegisterService.findByUserAndJob(notification.sender.id,notification.job.id).subscribe(
+    this.jobRegisterService.findByUserAndJob(notification.sender.id, notification.job.id).subscribe(
       (data: JobRegister) => {
-          this.jobRegister = data;
-          this.setNotification(notification);
+        this.jobRegister = data;
+        this.setNotification(notification);
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
       },
     );
   }
+
   // Notification
 
   connect() {
@@ -214,13 +224,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
       _this.stompClient.subscribe('/topic/apply', function(notify) {
         _this.badgeDot = true;
-        const notification= JSON.parse(notify.body);
+        const notification = JSON.parse(notify.body);
         const time = new Date(notification.createDate).toDateString();
-        if(_this.role === 'ROLE_JE'){
+        if (_this.role === 'ROLE_JE') {
           _this.getJobRegister(notification);
-        }else {
-          _this.notifyMenu = [..._this.notifyMenu,{title: notification.sender.name+' chờ xét duyệt công việc '
-              + notification.job.name+' ('+ time+' )', link: '/home/job-detail/'+notification.job.id}];
+        } else {
+          _this.notifyMenu = [..._this.notifyMenu, {
+            title: notification.sender.name + ' chờ xét duyệt công việc '
+              + notification.job.name + ' (' + time + ' )', link: '/home/job-detail/' + notification.job.id,
+          }];
         }
       });
     });
